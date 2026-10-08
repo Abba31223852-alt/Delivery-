@@ -1,0 +1,20 @@
+[
+  {
+    "tracking_number": "SD-2024-001234",
+    "status": "In Transit",
+    "location": "Lagos Sorting Center",
+    "updated_at": "2026-10-08T19:08:51.681Z"
+  },
+  {
+    "tracking_number": "SD-2024-005678",
+    "status": "Out for Delivery",
+    "location": "Abuja Distribution Hub",
+    "updated_at": "2026-10-08T19:08:51.681Z"
+  },
+  {
+    "tracking_number": "SD-2024-009012",
+    "status": "Delivered",
+    "location": "Port Harcourt",
+    "updated_at": "2026-10-08T19:08:51.681Z"
+  }
+]
