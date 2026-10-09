@@ -26,32 +26,48 @@
   .phone-auto-card .phone-spec { font-size:12px; color:rgba(255,255,255,0.5); }
   .phone-card h3 { font-size:17px; font-weight:800; margin-bottom:4px; }
   .phone-card p { font-size:13px; color:rgba(255,255,255,0.5); }
+  .watch-btn { margin-top:14px; width:100%; padding:12px; background:linear-gradient(135deg,#ff0000,#cc0000); color:#fff; border:none; border-radius:12px; font-weight:700; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .video-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; padding:20px; }
+  .video-overlay.show { display:flex; }
+  .video-box { background:#0d1220; border:1px solid rgba(0,212,255,0.25); border-radius:20px; padding:20px; max-width:700px; width:100%; position:relative; }
+  .video-box iframe { width:100%; height:400px; border:none; border-radius:12px; }
+  .video-box .close-x { position:absolute; top:15px; right:15px; background:rgba(0,0,0,0.6); border:none; color:#fff; width:36px; height:36px; border-radius:50%; font-size:20px; cursor:pointer; }
+  .video-box h3 { font-size:16px; margin-bottom:12px; padding-right:50px; }
+  @media (max-width:600px) { .video-box iframe { height:220px; } }
 </style>
 </head>
 <body>
-<div class="test-banner">⚠️ TEST VERSION — Not the live site</div>
+<div class="test-banner">TEST VERSION — Not the live site</div>
 <nav><div class="logo">Easy<span>Buy</span> Test</div></nav>
 <section class="section">
   <div class="section-title">
-    <h2>Test Phone Images</h2>
-    <p>If you like this, we copy it to the real site. If not, we delete it.</p>
+    <h2>Test Phone Images + Videos</h2>
+    <p>Tap the red button to watch a video of that phone</p>
   </div>
   <div class="phones-grid" id="phonesGrid"></div>
 </section>
 
+<div class="video-overlay" id="videoOverlay">
+  <div class="video-box">
+    <button class="close-x" onclick="closeVideo()">✕</button>
+    <h3 id="videoTitle"></h3>
+    <div id="videoFrame"></div>
+  </div>
+</div>
+
 <script>
 const phones = [
-  { id:1, name:"Itel A100cs", model:"A6611L 64/2 GB Vintage Green", brand:"Itel", image:"https://www.itel-life.com/fileadmin/assets/img/plp/A100CS/A100Cs-Cloud_White.png" },
-  { id:2, name:"Itel A300+", model:"A681L 64/4 GB Black", brand:"Itel", image:"https://ng.itelhome.shop/cdn/shop/files/itel_A300_Smartphone_with_7000mAh_Battery_2.01_Rear_Display_120Hz_Screen.webp?v=1789640204&width=3240" },
-  { id:3, name:"Itel A300+", model:"A681L 128/4 GB Black", brand:"Itel", image:"https://ng.itelhome.shop/cdn/shop/files/20260921-100848.webp?v=1789981787&width=2160" },
-  { id:4, name:"Itel A100CS", model:"A6611L 32/2 GB Red", brand:"Itel", image:"https://www.mobiledokan.com/media/itel-a100cs-natural-black-official-image.webp" },
-  { id:5, name:"Itel CITY 200s", model:"C681LN 128/4 GB Gray", brand:"Itel", image:"" },
-  { id:6, name:"Infinix HOT 70", model:"X6895 128/4 GB Grey", brand:"Infinix", image:"https://d3o31au25zfcly.cloudfront.net/newfileadmin/usp/hot-70/sec1/pc/kv_ng_pc.webp" },
-  { id:7, name:"Infinix HOT 70", model:"X6895B 256/6 GB Grey", brand:"Infinix", image:"https://global.pro.infinixmobility.com/media/wysiwyg/X6895_X6895B_HOT70_Family_series_Base_4.webp" },
-  { id:8, name:"TECNO Spark 50", model:"128/4 GB Grey", brand:"TECNO", image:"https://d13pvy8xd75yde.cloudfront.net/global/spark50_kn4_kn4n/en/KN4_7000mAh/assets/section1-kv-7000_mobile.webp" },
-  { id:9, name:"TECNO Spark 50 Pro", model:"KO5 128/6 GB Black", brand:"TECNO", image:"https://d13pvy8xd75yde.cloudfront.net/global/spark50pro_ko5/en/assets/kv-bg_mobile.webp" },
-  { id:10, name:"TECNO POP 10 Pro", model:"KM4k 128/4 GB Nebula Violet", brand:"TECNO", image:"https://d13pvy8xd75yde.cloudfront.net/global/phones/spark-40c/km4k_v1.0.0_complete/pop-10-pro/mb/kv.jpg" },
-  { id:11, name:"TECNO Pop 20", model:"Kn3 64/4 GB Grey", brand:"TECNO", image:"https://d13pvy8xd75yde.cloudfront.net/global/sparkgo3-pop20/pop-20/en/images/webp/kn3-section01-banner_m.jpg.webp" }
+  { id:1, name:"Itel A100cs", model:"A6611L 64/2 GB Vintage Green", brand:"Itel", image:"https://www.itel-life.com/fileadmin/assets/img/plp/A100CS/A100Cs-Cloud_White.png", video:"" },
+  { id:2, name:"Itel A300+", model:"A681L 64/4 GB Black", brand:"Itel", image:"https://ng.itelhome.shop/cdn/shop/files/itel_A300_Smartphone_with_7000mAh_Battery_2.01_Rear_Display_120Hz_Screen.webp?v=1789640204&width=3240", video:"" },
+  { id:3, name:"Itel A300+", model:"A681L 128/4 GB Black", brand:"Itel", image:"https://ng.itelhome.shop/cdn/shop/files/20260921-100848.webp?v=1789981787&width=2160", video:"" },
+  { id:4, name:"Itel A100CS", model:"A6611L 32/2 GB Red", brand:"Itel", image:"https://www.mobiledokan.com/media/itel-a100cs-natural-black-official-image.webp", video:"" },
+  { id:5, name:"Itel CITY 200s", model:"C681LN 128/4 GB Gray", brand:"Itel", image:"", video:"" },
+  { id:6, name:"Infinix HOT 70", model:"X6895 128/4 GB Grey", brand:"Infinix", image:"https://d3o31au25zfcly.cloudfront.net/newfileadmin/usp/hot-70/sec1/pc/kv_ng_pc.webp", video:"" },
+  { id:7, name:"Infinix HOT 70", model:"X6895B 256/6 GB Grey", brand:"Infinix", image:"https://global.pro.infinixmobility.com/media/wysiwyg/X6895_X6895B_HOT70_Family_series_Base_4.webp", video:"" },
+  { id:8, name:"TECNO Spark 50", model:"128/4 GB Grey", brand:"TECNO", image:"https://d13pvy8xd75yde.cloudfront.net/global/spark50_kn4_kn4n/en/KN4_7000mAh/assets/section1-kv-7000_mobile.webp", video:"" },
+  { id:9, name:"TECNO Spark 50 Pro", model:"KO5 128/6 GB Black", brand:"TECNO", image:"https://d13pvy8xd75yde.cloudfront.net/global/spark50pro_ko5/en/assets/kv-bg_mobile.webp", video:"" },
+  { id:10, name:"TECNO POP 10 Pro", model:"KM4k 128/4 GB Nebula Violet", brand:"TECNO", image:"https://d13pvy8xd75yde.cloudfront.net/global/phones/spark-40c/km4k_v1.0.0_complete/pop-10-pro/mb/kv.jpg", video:"" },
+  { id:11, name:"TECNO Pop 20", model:"Kn3 64/4 GB Grey", brand:"TECNO", image:"https://d13pvy8xd75yde.cloudfront.net/global/sparkgo3-pop20/pop-20/en/images/webp/kn3-section01-banner_m.jpg.webp", video:"" }
 ];
 
 function autoCardHTML(p) {
@@ -70,13 +86,42 @@ function imageHTML(p) {
   return autoCardHTML(p);
 }
 
+function videoButtonHTML(p) {
+  if (p.video && p.video.trim() !== "") {
+    return '<button class="watch-btn" onclick="openVideo(' + p.id + ')">▶ Watch Video</button>';
+  }
+  return '';
+}
+
 document.getElementById('phonesGrid').innerHTML = phones.map(p =>
   '<div class="phone-card">' +
     '<div class="phone-img-box">' + imageHTML(p) + '</div>' +
     '<h3>' + p.name + '</h3>' +
     '<p>' + p.model + '</p>' +
+    videoButtonHTML(p) +
   '</div>'
 ).join('');
+
+function getYouTubeId(url) {
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : '';
+}
+
+function openVideo(phoneId) {
+  const p = phones.find(x => x.id === phoneId);
+  if (!p || !p.video) return;
+  const id = getYouTubeId(p.video);
+  if (!id) { alert('Invalid YouTube link'); return; }
+  document.getElementById('videoTitle').textContent = p.name + ' — ' + p.model;
+  document.getElementById('videoFrame').innerHTML =
+    '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+  document.getElementById('videoOverlay').classList.add('show');
+}
+
+function closeVideo() {
+  document.getElementById('videoOverlay').classList.remove('show');
+  document.getElementById('videoFrame').innerHTML = '';
+}
 </script>
 </body>
 </html>
