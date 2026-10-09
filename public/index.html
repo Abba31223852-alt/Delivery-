@@ -7,152 +7,84 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
   body { font-family:'Inter',sans-serif; background:#070b14; color:#fff; overflow-x:hidden; }
-
   nav { position:fixed; top:0; width:100%; z-index:1000; background:rgba(7,11,20,0.85); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,0.06); padding:16px 40px; display:flex; justify-content:space-between; align-items:center; }
   .logo { font-size:22px; font-weight:900; display:flex; align-items:center; gap:10px; }
   .logo-icon { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,#00d4ff,#0072ff); display:flex; align-items:center; justify-content:center; font-size:18px; }
   .logo span { color:#00d4ff; }
   .nav-links { display:flex; gap:30px; }
-  .nav-links a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px; font-weight:500; transition:.3s; }
-  .nav-links a:hover { color:#00d4ff; }
-  .nav-btn { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:10px 24px; border-radius:50px; font-weight:600; cursor:pointer; font-size:14px; transition:.3s; }
-  .nav-btn:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,212,255,0.35); }
-
+  .nav-links a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px; }
+  .nav-btn { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:10px 24px; border-radius:50px; font-weight:600; cursor:pointer; font-size:14px; }
   .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:140px 40px 80px; position:relative; }
   .hero::before { content:''; position:absolute; top:-20%; left:50%; transform:translateX(-50%); width:900px; height:900px; border-radius:50%; background:radial-gradient(circle,rgba(0,212,255,0.12),transparent 60%); pointer-events:none; }
   .hero-content { max-width:900px; text-align:center; position:relative; z-index:1; }
-  .badge { display:inline-flex; align-items:center; gap:8px; padding:8px 20px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.25); border-radius:50px; font-size:13px; color:#00d4ff; margin-bottom:30px; font-weight:600; }
+  .badge { display:inline-block; padding:8px 20px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.25); border-radius:50px; font-size:13px; color:#00d4ff; margin-bottom:30px; font-weight:600; }
   .hero h1 { font-size:64px; font-weight:900; line-height:1.05; letter-spacing:-2px; margin-bottom:25px; }
   .hero h1 span { background:linear-gradient(135deg,#00d4ff,#0072ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
   .hero p { font-size:18px; color:rgba(255,255,255,0.6); max-width:600px; margin:0 auto 40px; line-height:1.7; }
   .hero-buttons { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-  .btn-primary { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:16px 36px; border-radius:50px; font-weight:700; cursor:pointer; font-size:16px; transition:.3s; }
-  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(0,212,255,0.4); }
-  .btn-secondary { background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.15); padding:16px 36px; border-radius:50px; font-weight:600; cursor:pointer; font-size:16px; transition:.3s; }
-  .btn-secondary:hover { border-color:#00d4ff; color:#00d4ff; }
-
+  .btn-primary { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:16px 36px; border-radius:50px; font-weight:700; cursor:pointer; font-size:16px; }
+  .btn-secondary { background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.15); padding:16px 36px; border-radius:50px; font-weight:600; cursor:pointer; font-size:16px; }
   .section { padding:100px 40px; max-width:1300px; margin:0 auto; }
   .section-title { text-align:center; margin-bottom:60px; }
   .section-title .tag { display:inline-block; padding:6px 18px; border-radius:50px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); color:#00d4ff; font-size:13px; font-weight:600; margin-bottom:18px; }
   .section-title h2 { font-size:44px; font-weight:900; letter-spacing:-2px; margin-bottom:14px; }
   .section-title p { color:rgba(255,255,255,0.5); font-size:16px; max-width:600px; margin:0 auto; }
-
   .how-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:30px; max-width:1000px; margin:0 auto; }
   .how-step { text-align:center; padding:20px; }
-  .how-num { width:60px; height:60px; margin:0 auto 22px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#00d4ff,#0072ff); font-size:24px; font-weight:900; box-shadow:0 10px 30px rgba(0,212,255,0.35); }
+  .how-num { width:60px; height:60px; margin:0 auto 22px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#00d4ff,#0072ff); font-size:24px; font-weight:900; }
   .how-step h3 { font-size:19px; margin-bottom:10px; font-weight:800; }
   .how-step p { color:rgba(255,255,255,0.5); font-size:14px; line-height:1.6; }
-
   .phones-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:25px; }
-  .phone-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:22px; padding:28px; transition:.35s; }
-  .phone-card:hover { border-color:rgba(0,212,255,0.35); transform:translateY(-5px); }
+  .phone-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:22px; padding:28px; }
   .phone-header { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
   .phone-header h3 { font-size:18px; font-weight:800; margin-bottom:3px; }
   .phone-header p { font-size:13px; color:rgba(255,255,255,0.5); }
-
   .phone-img-box { width:100%; height:240px; background:linear-gradient(135deg,#0a1220,#0f1a30); border-radius:16px; overflow:hidden; margin-bottom:18px; display:flex; align-items:center; justify-content:center; position:relative; }
   .phone-img-box img { width:100%; height:100%; object-fit:contain; }
-
-  .phone-auto-card {
-    width:100%; height:100%;
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    padding:20px; text-align:center;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(0,212,255,0.15), transparent 55%),
-      radial-gradient(circle at 80% 80%, rgba(0,114,255,0.18), transparent 55%),
-      linear-gradient(135deg, #0a1220, #0f1a30);
-    position:relative; overflow:hidden;
-  }
-  .phone-auto-card::before {
-    content:''; position:absolute; top:-50%; left:-50%;
-    width:200%; height:200%;
-    background:conic-gradient(from 0deg, transparent 0%, rgba(0,212,255,0.08) 25%, transparent 50%);
-    animation: shine 8s linear infinite;
-  }
-  @keyframes shine { to { transform: rotate(360deg); } }
-  .phone-auto-card .brand-badge {
-    font-size:11px; font-weight:800; letter-spacing:2px;
-    color:#00d4ff; text-transform:uppercase;
-    padding:5px 14px; border-radius:50px;
-    background:rgba(0,212,255,0.1);
-    border:1px solid rgba(0,212,255,0.3);
-    margin-bottom:14px;
-    position:relative; z-index:1;
-  }
-  .phone-auto-card .phone-shape {
-    width:72px; height:135px;
-    border:2px solid rgba(0,212,255,0.5);
-    border-radius:16px;
-    background:linear-gradient(180deg, rgba(0,212,255,0.08), rgba(0,114,255,0.15));
-    display:flex; align-items:center; justify-content:center;
-    font-size:34px;
-    margin-bottom:16px;
-    position:relative; z-index:1;
-    box-shadow:0 0 30px rgba(0,212,255,0.2);
-  }
-  .phone-auto-card .phone-name {
-    font-size:15px; font-weight:800;
-    color:#fff; margin-bottom:4px;
-    position:relative; z-index:1;
-    line-height:1.3;
-  }
-  .phone-auto-card .phone-spec {
-    font-size:12px; color:rgba(255,255,255,0.5);
-    position:relative; z-index:1;
-  }
-
+  .phone-auto-card { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center; background:linear-gradient(135deg, #0a1220, #0f1a30); }
+  .phone-auto-card .brand-badge { font-size:11px; font-weight:800; letter-spacing:2px; color:#00d4ff; text-transform:uppercase; padding:5px 14px; border-radius:50px; background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.3); margin-bottom:14px; }
+  .phone-auto-card .phone-shape { width:72px; height:135px; border:2px solid rgba(0,212,255,0.5); border-radius:16px; background:linear-gradient(180deg, rgba(0,212,255,0.08), rgba(0,114,255,0.15)); display:flex; align-items:center; justify-content:center; font-size:34px; margin-bottom:16px; }
+  .phone-auto-card .phone-name { font-size:15px; font-weight:800; color:#fff; margin-bottom:4px; line-height:1.3; }
+  .phone-auto-card .phone-spec { font-size:12px; color:rgba(255,255,255,0.5); }
   .dp-box { background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(0,114,255,0.08)); border:1px solid rgba(0,212,255,0.2); border-radius:14px; padding:16px; margin-bottom:18px; text-align:center; }
   .dp-box .label { font-size:12px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
   .dp-box .amount { font-size:28px; font-weight:900; color:#00d4ff; letter-spacing:-1px; }
-
   .plan-label { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:10px; font-weight:600; }
   .plan-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:16px; }
-  .plan-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.7); padding:9px 4px; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; transition:.2s; text-align:center; }
+  .plan-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.7); padding:9px 4px; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; text-align:center; }
   .plan-tab.active { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border-color:transparent; }
-  .plan-tab:hover:not(.active) { border-color:rgba(0,212,255,0.4); }
   .plan-tab.disabled { opacity:0.3; cursor:not-allowed; }
-
   .plan-display { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; margin-bottom:16px; }
   .plan-display .row { display:flex; justify-content:space-between; padding:6px 0; font-size:14px; }
   .plan-display .row .label { color:rgba(255,255,255,0.55); }
   .plan-display .row .value { font-weight:700; }
   .plan-display .row.total { border-top:1px solid rgba(255,255,255,0.08); margin-top:6px; padding-top:12px; font-size:15px; }
   .plan-display .row.total .value { color:#00d4ff; font-size:18px; }
-
-  .order-btn { width:100%; background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:14px; border-radius:12px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s; }
-  .order-btn:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(0,212,255,0.35); }
-
-  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:2000; align-items:center; justify-content:center; padding:20px; overflow-y:auto; }
-.modal-overlay.show { display:flex; }
-.modal { background:#0d1220; border:1px solid rgba(0,212,255,0.25); border-radius:24px; padding:35px 25px; max-width:500px; width:100%; max-height:90vh; overflow-y:auto; position:relative; margin:auto; }
+  .order-btn { width:100%; background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:14px; border-radius:12px; font-weight:700; font-size:15px; cursor:pointer; }
+  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; padding:20px; overflow-y:auto; }
+  .modal-overlay.show { display:flex; }
+  .modal { background:#0d1220; border:1px solid rgba(0,212,255,0.25); border-radius:24px; padding:35px 25px; max-width:500px; width:100%; max-height:90vh; overflow-y:auto; position:relative; margin:auto; }
   .modal h2 { font-size:22px; margin-bottom:8px; }
   .modal .subtitle { color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:22px; }
   .modal .summary { background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.15); border-radius:12px; padding:15px; margin-bottom:20px; font-size:14px; }
   .modal .summary strong { color:#00d4ff; }
   .modal input, .modal textarea { width:100%; padding:14px 18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#fff; font-size:14px; outline:none; margin-bottom:14px; font-family:'Inter',sans-serif; }
-  .modal input:focus, .modal textarea:focus { border-color:#00d4ff; }
   .modal .actions { display:flex; gap:12px; margin-top:10px; }
   .modal .actions button { flex:1; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; font-size:15px; }
   .modal .confirm { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; }
   .modal .cancel { background:rgba(255,255,255,0.06); color:#fff; border:1px solid rgba(255,255,255,0.15); }
   .modal .close-x { position:absolute; top:20px; right:20px; background:none; border:none; color:rgba(255,255,255,0.5); font-size:24px; cursor:pointer; }
-
   .contact-section { padding:100px 40px; max-width:700px; margin:0 auto; }
   .contact-form { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:22px; padding:40px; }
   .contact-form input, .contact-form textarea { width:100%; padding:16px 18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#fff; font-size:15px; outline:none; margin-bottom:14px; font-family:'Inter',sans-serif; }
-  .contact-form input:focus, .contact-form textarea:focus { border-color:#00d4ff; }
   .contact-form textarea { resize:vertical; min-height:120px; }
   .contact-form button { width:100%; background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:16px; border-radius:12px; font-weight:700; font-size:16px; cursor:pointer; }
-
   footer { padding:60px 40px 30px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; }
   .footer-logo { font-size:24px; font-weight:900; margin-bottom:20px; }
   .footer-logo span { color:#00d4ff; }
   .footer-info { color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:20px; line-height:1.8; }
   .footer-copy { color:rgba(255,255,255,0.3); font-size:13px; }
-
   @media (max-width:900px) {
     nav { padding:14px 20px; }
     .nav-links { display:none; }
@@ -194,9 +126,9 @@
     <p>Simple, transparent, and easy — designed for everyday Nigerians</p>
   </div>
   <div class="how-grid">
-    <div class="how-step"><div class="how-num">1</div><h3>Pick Your Phone</h3><p>Choose from Itel, Infinix, TECNO, and more. See the exact weekly price before you commit.</p></div>
-    <div class="how-step"><div class="how-num">2</div><h3>Pay Down Payment</h3><p>Pay the down payment shown for your chosen phone. This is what you pay to take the phone home.</p></div>
-    <div class="how-step"><div class="how-num">3</div><h3>Pay Weekly</h3><p>Pay your weekly amount in person each week. Choose 13, 17, 26, or 39 weeks — whatever fits your budget.</p></div>
+    <div class="how-step"><div class="how-num">1</div><h3>Pick Your Phone</h3><p>Choose from Itel, Infinix, TECNO, and more.</p></div>
+    <div class="how-step"><div class="how-num">2</div><h3>Pay Down Payment</h3><p>Pay the down payment shown for your chosen phone.</p></div>
+    <div class="how-step"><div class="how-num">3</div><h3>Pay Weekly</h3><p>Pay your weekly amount in person each week. 13, 17, 26, or 39 weeks.</p></div>
   </div>
 </section>
 
@@ -272,7 +204,7 @@ function formatNaira(n) { return '₦' + n.toLocaleString('en-NG'); }
 
 function phoneImageHTML(p) {
   if (p.image && p.image.trim() !== "") {
-    return '<img src="' + p.image + '" alt="' + p.name + '" onerror="this.parentElement.innerHTML=autoCardHTML(this.dataset.fallback);" data-fallback="' + p.id + '">';
+    return '<img src="' + p.image + '" alt="' + p.name + '" onerror="this.parentElement.innerHTML=autoCardHTML(' + p.id + ');">';
   }
   return autoCardHTML(p.id);
 }
@@ -341,7 +273,7 @@ function updateDisplay(phoneId, weeks) {
 
   document.getElementById('display-'+phoneId).innerHTML =
     '<div class="row"><span class="label">Down Payment</span><span class="value">' + dpText + '</span></div>' +
-    '<div class="row"><span class="label">Weekly × ' + weeks + ' weeks</span><span class="value">' + formatNaira(weekly) + '</span></div>' +
+    '<div class="row"><span class="label">Weekly x ' + weeks + ' weeks</span><span class="value">' + formatNaira(weekly) + '</span></div>' +
     '<div class="row"><span class="label">Total Outstanding</span><span class="value">' + formatNaira(total) + '</span></div>' +
     (grandTotal ? '<div class="row total"><span class="label">Total Cost</span><span class="value">' + formatNaira(grandTotal) + '</span></div>' : '');
 }
@@ -352,26 +284,43 @@ function openOrder(phoneId) {
   const p = phones.find(x => x.id === phoneId);
   const activeTab = document.querySelector('#tabs-'+phoneId+' .plan-tab.active');
   const weeks = activeTab ? parseInt(activeTab.textContent) : 13;
-  const weekly = p['w'+weeks];
+  renderModalSummary(p, weeks);
+  document.getElementById('orderModal').classList.add('show');
+}
+
+function renderModalSummary(p, weeks) {
+  const weekly = p['w' + weeks];
   const total = weekly * weeks;
+  const plans = [13, 17, 26, 39];
+
+  const tabsHTML = plans.map(w => {
+    const disabled = !p['w' + w];
+    const active = (w === weeks) ? 'active' : '';
+    return '<div class="plan-tab ' + active + ' ' + (disabled ? 'disabled' : '') + '" ' + (disabled ? '' : 'onclick="switchModalPlan(' + p.id + ',' + w + ')"') + '>' + w + 'w</div>';
+  }).join('');
+
+  document.getElementById('modalSummary').innerHTML =
+    '<div><strong>' + p.name + '</strong> - ' + p.model + '</div>' +
+    '<div style="margin-top:14px;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;">Choose your weekly plan:</div>' +
+    '<div class="plan-tabs" style="margin-bottom:14px;">' + tabsHTML + '</div>' +
+    '<div style="margin-top:8px;">Down Payment: <strong>' + (p.dp ? formatNaira(p.dp) : 'TBD') + '</strong></div>' +
+    '<div>Weekly Payment: <strong>' + formatNaira(weekly) + '</strong> x ' + weeks + ' weeks</div>' +
+    '<div>Total Outstanding: <strong>' + formatNaira(total) + '</strong></div>' +
+    (p.dp ? '<div>Total Cost: <strong>' + formatNaira(p.dp + total) + '</strong></div>' : '');
 
   currentOrder = {
-    phone_model: p.name + ' — ' + p.model,
+    phone_model: p.name + ' - ' + p.model,
     down_payment: p.dp || 'TBD',
     weeks: weeks,
     weekly_payment: weekly,
     total_outstanding: total,
     total_cost: p.dp ? p.dp + total : null
   };
+}
 
-  document.getElementById('modalSummary').innerHTML =
-    '<div><strong>' + p.name + '</strong> — ' + p.model + '</div>' +
-    '<div style="margin-top:8px;">Down Payment: <strong>' + (p.dp ? formatNaira(p.dp) : 'TBD') + '</strong></div>' +
-    '<div>Weekly Payment: <strong>' + formatNaira(weekly) + '</strong> × ' + weeks + ' weeks</div>' +
-    '<div>Total Outstanding: <strong>' + formatNaira(total) + '</strong></div>' +
-    (p.dp ? '<div>Total Cost: <strong>' + formatNaira(p.dp + total) + '</strong></div>' : '');
-
-  document.getElementById('orderModal').classList.add('show');
+function switchModalPlan(phoneId, weeks) {
+  const p = phones.find(x => x.id === phoneId);
+  renderModalSummary(p, weeks);
 }
 
 function closeModal() { document.getElementById('orderModal').classList.remove('show'); }
