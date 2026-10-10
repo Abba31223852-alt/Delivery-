@@ -93,6 +93,282 @@
     .section-title h2 { font-size:30px; letter-spacing:-1px; }
     .hero, .section, .contact-section { padding-left:20px; padding-right:20px; }
   }
+
+/* EASY BUY PREMIUM UPGRADE */
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  background:
+    radial-gradient(ellipse at 15% 8%, rgba(0,212,255,.09), transparent 34%),
+    radial-gradient(ellipse at 88% 32%, rgba(0,92,255,.08), transparent 36%),
+    #070b14;
+}
+nav {
+  transition: background .3s ease, box-shadow .3s ease;
+  box-shadow: 0 8px 35px rgba(0,0,0,.12);
+}
+.logo-icon {
+  box-shadow: 0 0 24px rgba(0,212,255,.25);
+  animation: ebLogoGlow 4s ease-in-out infinite;
+}
+.hero::before {
+  animation: ebAura 9s ease-in-out infinite alternate;
+}
+.badge {
+  box-shadow: 0 0 24px rgba(0,212,255,.08);
+  animation: ebBadgeGlow 4s ease-in-out infinite;
+}
+.hero h1 {
+  text-wrap: balance;
+  animation: ebRise .8s ease both;
+}
+.hero p { animation: ebRise 1s ease both; }
+.hero-buttons { animation: ebRise 1.2s ease both; }
+.btn-primary, .btn-secondary, .nav-btn, .order-btn,
+.contact-form button, .modal .confirm, .modal .cancel {
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+}
+.btn-primary:hover, .nav-btn:hover, .order-btn:hover,
+.contact-form button:hover, .modal .confirm:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0,150,255,.24);
+  filter: brightness(1.08);
+}
+.btn-secondary:hover, .modal .cancel:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.1);
+}
+.how-step {
+  border: 1px solid rgba(255,255,255,.055);
+  border-radius: 20px;
+  padding: 28px 20px;
+  background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+  transition: transform .3s ease, border-color .3s ease, background .3s ease;
+}
+.how-step:hover {
+  transform: translateY(-7px);
+  border-color: rgba(0,212,255,.28);
+  background: rgba(0,212,255,.045);
+}
+.how-num {
+  box-shadow: 0 8px 25px rgba(0,114,255,.2);
+  transition: transform .3s ease;
+}
+.how-step:hover .how-num { transform: scale(1.08) rotate(-5deg); }
+.phone-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg,rgba(18,29,49,.92),rgba(10,15,27,.96));
+  border-color: rgba(255,255,255,.09);
+  box-shadow: 0 12px 35px rgba(0,0,0,.12);
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.phone-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 12%;
+  width: 76%; height: 1px;
+  background: linear-gradient(90deg,transparent,rgba(0,212,255,.5),transparent);
+  pointer-events: none;
+}
+.phone-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0,212,255,.3);
+  box-shadow: 0 20px 45px rgba(0,0,0,.25), 0 0 25px rgba(0,150,255,.055);
+}
+.phone-img-box {
+  border: 1px solid rgba(255,255,255,.045);
+  background: radial-gradient(ellipse at center,rgba(0,114,255,.12),transparent 70%),linear-gradient(135deg,#0a1220,#0f1a30);
+}
+.phone-img-box img { transition: transform .45s ease; }
+.phone-card:hover .phone-img-box img { transform: scale(1.045); }
+.phone-auto-card .phone-shape {
+  box-shadow: 0 0 28px rgba(0,212,255,.1);
+  animation: ebPhoneFloat 4s ease-in-out infinite;
+}
+.dp-box { box-shadow: inset 0 1px rgba(255,255,255,.035); }
+.plan-tab { transition: background .2s ease, transform .2s ease, border-color .2s ease; }
+.plan-tab:not(.disabled):hover { transform: translateY(-2px); border-color: rgba(0,212,255,.5); }
+.plan-tab.active { box-shadow: 0 5px 15px rgba(0,114,255,.2); }
+.plan-display { transition: border-color .25s ease; }
+.phone-card:focus-within, .contact-form:focus-within {
+  border-color: rgba(0,212,255,.28);
+}
+.modal {
+  box-shadow: 0 25px 90px rgba(0,0,0,.45), 0 0 35px rgba(0,212,255,.06);
+  animation: ebModalIn .25s ease both;
+}
+.modal input:focus, .modal textarea:focus,
+.contact-form input:focus, .contact-form textarea:focus {
+  border-color: rgba(0,212,255,.6);
+  box-shadow: 0 0 0 3px rgba(0,212,255,.08);
+}
+button:focus-visible, a:focus-visible, input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 3px;
+}
+@keyframes ebRise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ebAura {
+  from { opacity: .65; scale: .92; }
+  to { opacity: 1; scale: 1.06; }
+}
+@keyframes ebBadgeGlow {
+  0%,100% { border-color: rgba(0,212,255,.2); }
+  50% { border-color: rgba(0,212,255,.5); }
+}
+@keyframes ebLogoGlow {
+  0%,100% { box-shadow: 0 0 15px rgba(0,212,255,.15); }
+  50% { box-shadow: 0 0 25px rgba(0,212,255,.35); }
+}
+@keyframes ebPhoneFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes ebModalIn {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 600px) {
+  nav { padding: 12px 14px; }
+  .logo { font-size: 19px; gap: 7px; }
+  .logo-icon { width: 32px; height: 32px; font-size: 16px; }
+  .nav-btn { padding: 10px 14px; font-size: 12px; }
+  .hero { min-height: 88vh; padding: 120px 18px 65px; }
+  .hero h1 { font-size: clamp(35px, 9vw, 46px); line-height: 1.08; letter-spacing: -1.4px; }
+  .hero p { font-size: 15px; line-height: 1.75; }
+  .badge { font-size: 11px; padding: 8px 12px; margin-bottom: 24px; }
+  .hero-buttons { gap: 11px; }
+  .btn-primary, .btn-secondary { padding: 14px 20px; font-size: 14px; }
+  .section { padding-top: 72px; padding-bottom: 72px; }
+  .section-title { margin-bottom: 36px; }
+  .section-title h2 { font-size: clamp(27px, 7vw, 34px); }
+  .phones-grid { grid-template-columns: minmax(0,1fr); gap: 18px; }
+  .phone-card { padding: 18px; border-radius: 20px; }
+  .phone-img-box { height: 220px; }
+  .dp-box .amount { font-size: 25px; }
+  .contact-section { padding-top: 72px; padding-bottom: 72px; }
+  .contact-form { padding: 22px 17px; border-radius: 18px; }
+  .modal { padding: 30px 18px 22px; border-radius: 20px; }
+  .modal .actions { flex-direction: column; }
+  footer { padding: 45px 20px 25px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* EASY BUY LAYER 2 MOTION */
+.hero { isolation: isolate; }
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  right: 5%;
+  top: 22%;
+  border: 1px solid rgba(0,212,255,.13);
+  border-radius: 50%;
+  box-shadow: 0 0 55px rgba(0,114,255,.08), inset 0 0 45px rgba(0,212,255,.04);
+  pointer-events: none;
+  z-index: 0;
+  animation: ebOrbit 12s ease-in-out infinite alternate;
+}
+.hero-content > * { will-change: opacity, transform; }
+.section-title .tag { transition: box-shadow .3s ease; }
+.section-title:hover .tag { box-shadow: 0 0 22px rgba(0,212,255,.12); }
+.eb-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.eb-reveal.eb-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.how-step.eb-reveal:nth-child(2) { transition-delay: .12s; }
+.how-step.eb-reveal:nth-child(3) { transition-delay: .24s; }
+.phone-card.eb-reveal { transition-duration: .65s; }
+@keyframes ebOrbit {
+  0% { transform: translate3d(0,0,0) rotate(0deg) scale(.92); }
+  50% { transform: translate3d(-18px,20px,0) rotate(8deg) scale(1.04); }
+  100% { transform: translate3d(12px,-12px,0) rotate(-5deg) scale(.98); }
+}
+@media (max-width: 600px) {
+  .hero::after { width: 150px; height: 150px; right: -35px; top: 16%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eb-reveal { opacity: 1; transform: none; }
+}
+
+
+/* EASY BUY LAYER 3 CATALOGUE */
+.catalog-tools {
+  max-width: 850px;
+  margin: 0 auto 28px;
+}
+#phoneSearch {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 18px;
+  color: #fff;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  font: inherit;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+#phoneSearch:focus {
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 3px rgba(0,212,255,.09);
+}
+.brand-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+.brand-filter {
+  padding: 10px 17px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 999px;
+  color: #dce8f8;
+  background: rgba(255,255,255,.04);
+  cursor: pointer;
+  transition: .2s ease;
+}
+.brand-filter:hover,
+.brand-filter.active {
+  color: #06111e;
+  background: linear-gradient(135deg,#00d4ff,#4b8dff);
+  border-color: transparent;
+}
+#phoneResultsCount {
+  color: #9aacc5;
+  font-size: 13px;
+  text-align: center;
+  margin: 15px 0 0;
+}
+.no-phone-results {
+  grid-column: 1 / -1;
+  padding: 35px 15px;
+  color: #b9c7dc;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  .brand-filters { gap: 8px; }
+  .brand-filter { padding: 9px 13px; font-size: 13px; }
+}
+
 </style>
 </head>
 <body>
@@ -137,6 +413,16 @@
     <div class="tag">Our Phones</div>
     <h2>Available Phones &amp; Plans</h2>
     <p>All prices are in Naira. Down payment is paid once. Weekly payment is paid every week until you finish.</p>
+  </div>
+  <div class="catalog-tools">
+    <input id="phoneSearch" type="search" placeholder="🔍 Search phone name, model or storage..." aria-label="Search phones">
+    <div class="brand-filters">
+      <button type="button" class="brand-filter active" data-brand="All">All Phones</button>
+      <button type="button" class="brand-filter" data-brand="Itel">Itel</button>
+      <button type="button" class="brand-filter" data-brand="Infinix">Infinix</button>
+      <button type="button" class="brand-filter" data-brand="TECNO">TECNO</button>
+    </div>
+    <p id="phoneResultsCount" aria-live="polite">Showing 11 phones</p>
   </div>
   <div class="phones-grid" id="phonesGrid"></div>
 </section>
@@ -187,17 +473,17 @@
 
 <script>
 const phones = [
-  { id:1, name:"Itel A100cs", model:"A6611L 64/2 GB Vintage Green", brand:"Itel", dp:33240, w13:9374, w17:7669, w26:null, w39:null, image:"" },
-  { id:2, name:"Itel A300+", model:"A681L 64/4 GB Black", brand:"Itel", dp:44070, w13:12428, w17:10168, w26:7626, w39:5885, image:"" },
-  { id:3, name:"Itel A300+", model:"A681L 128/4 GB Black", brand:"Itel", dp:52800, w13:14890, w17:12182, w26:9136, w39:7051, image:"" },
-  { id:4, name:"Itel A100CS", model:"A6611L 32/2 GB Red", brand:"Itel", dp:29970, w13:8452, w17:6915, w26:5186, w39:4002, image:"" },
+  { id:1, name:"Itel A100cs", model:"A6611L 64/2 GB Vintage Green", brand:"Itel", dp:33240, w13:9374, w17:7669, w26:null, w39:null, image:"/images/itel-a100cs.png" },
+  { id:2, name:"Itel A300+", model:"A681L 64/4 GB Black", brand:"Itel", dp:44070, w13:12428, w17:10168, w26:7626, w39:5885, image:"/images/itel-a300-plus.png" },
+  { id:3, name:"Itel A300+", model:"A681L 128/4 GB Black", brand:"Itel", dp:52800, w13:14890, w17:12182, w26:9136, w39:7051, image:"/images/itel-a300-plus.png" },
+  { id:4, name:"Itel A100CS", model:"A6611L 32/2 GB Red", brand:"Itel", dp:29970, w13:8452, w17:6915, w26:5186, w39:4002, image:"/images/itel-a100cs.png" },
   { id:5, name:"Itel CITY 200s", model:"C681LN 128/4 GB Gray", brand:"Itel", dp:55500, w13:15651, w17:12805, w26:9603, w39:7411, image:"" },
   { id:6, name:"Infinix HOT 70", model:"X6895 128/4 GB Grey", brand:"Infinix", dp:67470, w13:19027, w17:15567, w26:11675, w39:9010, image:"" },
   { id:7, name:"Infinix HOT 70", model:"X6895B 256/6 GB Grey", brand:"Infinix", dp:89970, w13:25373, w17:20759, w26:15568, w39:12014, image:"" },
-{ id:8, name:"TECNO Spark 50", model:"128/4 GB Grey", brand:"TECNO", dp:64380, w13:18156, w17:14854, w26:11140, w39:8597, image:"" }, 
-  { id:9, name:"TECNO Spark 50 Pro", model:"KO5 128/6 GB Black", brand:"TECNO", dp:100440, w13:28325, w17:23174, w26:17379, w39:13413, image:"" },
-  { id:10, name:"TECNO POP 10 Pro", model:"KM4k 128/4 GB Nebula Violet", brand:"TECNO", dp:43344, w13:12224, w17:10001, w26:7500, w39:5788, image:"" },
-  { id:11, name:"TECNO Pop 20", model:"Kn3 64/4 GB Grey", brand:"TECNO", dp:43088, w13:10708, w17:8031, w26:6198, w39:null, image:"" }
+{ id:8, name:"TECNO Spark 50", model:"128/4 GB Grey", brand:"TECNO", dp:64380, w13:18156, w17:14854, w26:11140, w39:8597, image:"/images/tecno-spark-50.png" }, 
+  { id:9, name:"TECNO Spark 50 Pro", model:"KO5 128/6 GB Black", brand:"TECNO", dp:100440, w13:28325, w17:23174, w26:17379, w39:13413, image:"/images/tecno-spark-50-pro.png" },
+  { id:10, name:"TECNO POP 10 Pro", model:"KM4k 128/4 GB Nebula Violet", brand:"TECNO", dp:43344, w13:12224, w17:10001, w26:7500, w39:5788, image:"/images/tecno-pop-10-pro.png" },
+  { id:11, name:"TECNO Pop 20", model:"Kn3 64/4 GB Grey", brand:"TECNO", dp:43088, w13:10708, w17:8031, w26:6198, w39:null, image:"/images/tecno-pop-20.png" }
 ];
 
 function formatNaira(n) { return '₦' + n.toLocaleString('en-NG'); }
@@ -220,9 +506,29 @@ function autoCardHTML(id) {
   '</div>';
 }
 
+let activePhoneBrand = 'All';
+
 function renderPhones() {
   const grid = document.getElementById('phonesGrid');
-  grid.innerHTML = phones.map(p => {
+  const searchInput = document.getElementById('phoneSearch');
+  const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+
+  const filteredPhones = phones.filter(p => {
+    const brandMatches = activePhoneBrand === 'All' ||
+      p.brand.toLowerCase() === activePhoneBrand.toLowerCase();
+    const searchable = [p.name, p.model, p.brand].join(' ').toLowerCase();
+    return brandMatches && searchable.includes(query);
+  });
+
+  const count = document.getElementById('phoneResultsCount');
+  if (count) {
+    count.textContent = filteredPhones.length === phones.length &&
+      !query && activePhoneBrand === 'All'
+      ? 'Showing ' + phones.length + ' phones'
+      : 'Showing ' + filteredPhones.length + ' of ' + phones.length + ' phones';
+  }
+
+  grid.innerHTML = filteredPhones.map(p => {
     const dpText = p.dp ? formatNaira(p.dp) : 'Ask us';
     const plans = [
       { weeks:13, price:p.w13 },
@@ -250,7 +556,11 @@ function renderPhones() {
     '</div>';
   }).join('');
 
-  phones.forEach(p => {
+  if (!filteredPhones.length) {
+    grid.innerHTML = '<p class="no-phone-results">No phones found. Try another search.</p>';
+  }
+
+  filteredPhones.forEach(p => {
     const available = [13,17,26,39].filter(w => p['w'+w]);
     if (available.length) updateDisplay(p.id, available[0]);
   });
@@ -356,7 +666,75 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
   } catch (err) { alert('Error sending. Please try again.'); }
 });
 
+const phoneSearch = document.getElementById('phoneSearch');
+if (phoneSearch) {
+  phoneSearch.addEventListener('input', renderPhones);
+}
+
+document.querySelectorAll('.brand-filter').forEach(button => {
+  button.addEventListener('click', () => {
+    activePhoneBrand = button.dataset.brand || 'All';
+    document.querySelectorAll('.brand-filter').forEach(item => {
+      item.classList.toggle('active', item === button);
+    });
+    renderPhones();
+  });
+});
+
 renderPhones();
 </script>
+
+<!-- EASY BUY LAYER 2 MOTION -->
+<script>
+(function () {
+  const targets = '.section-title, .how-step, .phone-card, .contact-form, footer';
+  let observer = null;
+
+  function prepareReveal(root) {
+    const elements = [];
+    if (root.matches && root.matches(targets)) elements.push(root);
+    if (root.querySelectorAll) elements.push(...root.querySelectorAll(targets));
+
+    elements.forEach(function (el) {
+      if (el.dataset.ebRevealReady) return;
+      el.dataset.ebRevealReady = 'yes';
+      el.classList.add('eb-reveal');
+
+      if (el.classList.contains('phone-card')) {
+        const cards = Array.from(document.querySelectorAll('.phone-card'));
+        el.style.transitionDelay = (Math.min(cards.indexOf(el), 4) * 70) + 'ms';
+      }
+
+      if (observer) observer.observe(el);
+      else el.classList.add('eb-visible');
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('eb-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
+  }
+
+  prepareReveal(document);
+
+  const grid = document.getElementById('phonesGrid');
+  if (grid && 'MutationObserver' in window) {
+    new MutationObserver(function (changes) {
+      changes.forEach(function (change) {
+        change.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) prepareReveal(node);
+        });
+      });
+    }).observe(grid, { childList: true, subtree: true });
+  }
+})();
+</script>
+
 </body>
 </html>
