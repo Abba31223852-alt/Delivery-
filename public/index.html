@@ -3,475 +3,179 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Easy Buy — Own a Phone, Pay Small Small</title>
+<title>Easy Buy</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Inter',sans-serif; background:#070b14; color:#fff; overflow-x:hidden; }
-  nav { position:fixed; top:0; width:100%; z-index:1000; background:rgba(7,11,20,0.85); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,0.06); padding:16px 40px; display:flex; justify-content:space-between; align-items:center; }
-  .logo { font-size:22px; font-weight:900; display:flex; align-items:center; gap:10px; }
-  .logo-icon { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,#00d4ff,#0072ff); display:flex; align-items:center; justify-content:center; font-size:18px; }
-  .logo span { color:#00d4ff; }
-  .nav-links { display:flex; gap:30px; }
-  .nav-links a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px; }
-  .nav-btn { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:10px 24px; border-radius:50px; font-weight:600; cursor:pointer; font-size:14px; }
-  .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:140px 40px 80px; position:relative; }
-  .hero::before { content:''; position:absolute; top:-20%; left:50%; transform:translateX(-50%); width:900px; height:900px; border-radius:50%; background:radial-gradient(circle,rgba(0,212,255,0.12),transparent 60%); pointer-events:none; }
-  .hero-content { max-width:900px; text-align:center; position:relative; z-index:1; }
-  .badge { display:inline-block; padding:8px 20px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.25); border-radius:50px; font-size:13px; color:#00d4ff; margin-bottom:30px; font-weight:600; }
-  .hero h1 { font-size:64px; font-weight:900; line-height:1.05; letter-spacing:-2px; margin-bottom:25px; }
-  .hero h1 span { background:linear-gradient(135deg,#00d4ff,#0072ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-  .hero p { font-size:18px; color:rgba(255,255,255,0.6); max-width:600px; margin:0 auto 40px; line-height:1.7; }
-  .hero-buttons { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-  .btn-primary { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:16px 36px; border-radius:50px; font-weight:700; cursor:pointer; font-size:16px; }
-  .btn-secondary { background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.15); padding:16px 36px; border-radius:50px; font-weight:600; cursor:pointer; font-size:16px; }
-  .section { padding:100px 40px; max-width:1300px; margin:0 auto; }
-  .section-title { text-align:center; margin-bottom:60px; }
-  .section-title .tag { display:inline-block; padding:6px 18px; border-radius:50px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); color:#00d4ff; font-size:13px; font-weight:600; margin-bottom:18px; }
-  .section-title h2 { font-size:44px; font-weight:900; letter-spacing:-2px; margin-bottom:14px; }
-  .section-title p { color:rgba(255,255,255,0.5); font-size:16px; max-width:600px; margin:0 auto; }
-  .how-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:30px; max-width:1000px; margin:0 auto; }
-  .how-step { text-align:center; padding:20px; }
-  .how-num { width:60px; height:60px; margin:0 auto 22px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#00d4ff,#0072ff); font-size:24px; font-weight:900; }
-  .how-step h3 { font-size:19px; margin-bottom:10px; font-weight:800; }
-  .how-step p { color:rgba(255,255,255,0.5); font-size:14px; line-height:1.6; }
-  .phones-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:25px; }
-  .phone-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:22px; padding:28px; }
-  .phone-header { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
-  .phone-header h3 { font-size:18px; font-weight:800; margin-bottom:3px; }
-  .phone-header p { font-size:13px; color:rgba(255,255,255,0.5); }
-  .phone-img-box { width:100%; height:240px; background:linear-gradient(135deg,#0a1220,#0f1a30); border-radius:16px; overflow:hidden; margin-bottom:18px; display:flex; align-items:center; justify-content:center; position:relative; }
-  .phone-img-box img { width:100%; height:100%; object-fit:contain; }
-  .phone-auto-card { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center; background:linear-gradient(135deg, #0a1220, #0f1a30); }
-  .phone-auto-card .brand-badge { font-size:11px; font-weight:800; letter-spacing:2px; color:#00d4ff; text-transform:uppercase; padding:5px 14px; border-radius:50px; background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.3); margin-bottom:14px; }
-  .phone-auto-card .phone-shape { width:72px; height:135px; border:2px solid rgba(0,212,255,0.5); border-radius:16px; background:linear-gradient(180deg, rgba(0,212,255,0.08), rgba(0,114,255,0.15)); display:flex; align-items:center; justify-content:center; font-size:34px; margin-bottom:16px; }
-  .phone-auto-card .phone-name { font-size:15px; font-weight:800; color:#fff; margin-bottom:4px; line-height:1.3; }
-  .phone-auto-card .phone-spec { font-size:12px; color:rgba(255,255,255,0.5); }
-  .dp-box { background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(0,114,255,0.08)); border:1px solid rgba(0,212,255,0.2); border-radius:14px; padding:16px; margin-bottom:18px; text-align:center; }
-  .dp-box .label { font-size:12px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
-  .dp-box .amount { font-size:28px; font-weight:900; color:#00d4ff; letter-spacing:-1px; }
-  .plan-label { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:10px; font-weight:600; }
-  .plan-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:16px; }
-  .plan-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.7); padding:9px 4px; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; text-align:center; }
+  body { font-family:'Inter',sans-serif; background:#070b14; color:#fff; padding:20px; }
+  .test-banner { background:#ffc107; color:#000; padding:10px; text-align:center; font-weight:800; font-size:13px; border-radius:10px; margin-bottom:20px; }
+  .lang-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:80vh; text-align:center; }
+  .lang-screen h1 { font-size:34px; font-weight:900; margin-bottom:10px; }
+  .lang-screen h1 span { color:#00d4ff; }
+  .lang-screen .sub { color:rgba(255,255,255,0.55); font-size:16px; margin-bottom:8px; }
+  .lang-screen .sub-ha { color:rgba(255,255,255,0.55); font-size:16px; margin-bottom:35px; }
+  .lang-btns { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+  .lang-btn { background:rgba(255,255,255,0.04); border:2px solid rgba(255,255,255,0.12); color:#fff; padding:28px 40px; border-radius:20px; font-weight:800; font-size:20px; cursor:pointer; transition:.25s; min-width:180px; }
+  .lang-btn:hover, .lang-btn:active { border-color:#00d4ff; background:rgba(0,212,255,0.08); transform:translateY(-3px); }
+  .lang-btn .flag { font-size:36px; display:block; margin-bottom:12px; }
+  .site { display:none; }
+  .lang-toggle { position:fixed; top:14px; right:14px; background:rgba(0,212,255,0.15); border:1px solid rgba(0,212,255,0.4); color:#00d4ff; padding:8px 16px; border-radius:50px; font-weight:700; font-size:13px; cursor:pointer; z-index:100; }
+  h1.site-title { font-size:22px; margin-bottom:10px; }
+  h1.site-title span { color:#00d4ff; }
+  .sub { color:rgba(255,255,255,0.5); font-size:13px; margin-bottom:16px; }
+
+  .info-banner {
+    background:linear-gradient(135deg,rgba(0,212,255,0.12),rgba(0,114,255,0.08));
+    border:1px solid rgba(0,212,255,0.3);
+    border-radius:14px; padding:16px 18px; margin-bottom:24px;
+    font-size:14px; line-height:1.7;
+  }
+  .info-banner strong { color:#00d4ff; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+  .card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:18px; }
+  .card-img { width:100%; height:200px; background:#0a1220; border-radius:12px; overflow:hidden; margin-bottom:14px; display:flex; align-items:center; justify-content:center; }
+  .card-img img { width:100%; height:100%; object-fit:contain; }
+  .card-fallback { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg,#0a1220,#0f1a30); }
+  .card-fallback .badge { font-size:10px; font-weight:800; letter-spacing:2px; color:#00d4ff; padding:4px 12px; border-radius:50px; background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.3); margin-bottom:10px; }
+  .card-fallback .shape { width:60px; height:110px; border:2px solid rgba(0,212,255,0.5); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px; }
+  .card-fallback .name { font-size:13px; font-weight:800; }
+  .card h3 { font-size:16px; font-weight:800; margin-bottom:4px; }
+  .card p { font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:12px; }
+  .dp { background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:10px; text-align:center; margin-bottom:12px; }
+  .dp .lbl { font-size:10px; text-transform:uppercase; color:rgba(255,255,255,0.6); letter-spacing:1px; }
+  .dp .amt { font-size:20px; font-weight:900; color:#00d4ff; }
+  .plan-lbl { font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:6px; font-weight:600; }
+  .plan-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:12px; }
+  .plan-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.75); padding:10px 2px; border-radius:8px; font-size:11px; font-weight:800; cursor:pointer; text-align:center; line-height:1.2; }
+  .plan-tab .mo { font-size:13px; display:block; }
+  .plan-tab .wk { font-size:9px; opacity:0.7; display:block; margin-top:2px; }
   .plan-tab.active { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border-color:transparent; }
   .plan-tab.disabled { opacity:0.3; cursor:not-allowed; }
-  .plan-display { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; margin-bottom:16px; }
-  .plan-display .row { display:flex; justify-content:space-between; padding:6px 0; font-size:14px; }
-  .plan-display .row .label { color:rgba(255,255,255,0.55); }
-  .plan-display .row .value { font-weight:700; }
-  .plan-display .row.total { border-top:1px solid rgba(255,255,255,0.08); margin-top:6px; padding-top:12px; font-size:15px; }
-  .plan-display .row.total .value { color:#00d4ff; font-size:18px; }
-  .order-btn { width:100%; background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:14px; border-radius:12px; font-weight:700; font-size:15px; cursor:pointer; }
-  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; padding:20px; overflow-y:auto; }
-  .modal-overlay.show { display:flex; }
-  .modal { background:#0d1220; border:1px solid rgba(0,212,255,0.25); border-radius:24px; padding:35px 25px; max-width:500px; width:100%; max-height:90vh; overflow-y:auto; position:relative; margin:auto; }
-  .modal h2 { font-size:22px; margin-bottom:8px; }
-  .modal .subtitle { color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:22px; }
-  .modal .summary { background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.15); border-radius:12px; padding:15px; margin-bottom:20px; font-size:14px; }
-  .modal .summary strong { color:#00d4ff; }
-  .modal input, .modal textarea { width:100%; padding:14px 18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#fff; font-size:14px; outline:none; margin-bottom:14px; font-family:'Inter',sans-serif; }
-  .modal .actions { display:flex; gap:12px; margin-top:10px; }
-  .modal .actions button { flex:1; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; font-size:15px; }
-  .modal .confirm { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; }
-  .modal .cancel { background:rgba(255,255,255,0.06); color:#fff; border:1px solid rgba(255,255,255,0.15); }
-  .modal .close-x { position:absolute; top:20px; right:20px; background:none; border:none; color:rgba(255,255,255,0.5); font-size:24px; cursor:pointer; }
-  .contact-section { padding:100px 40px; max-width:700px; margin:0 auto; }
-  .contact-form { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:22px; padding:40px; }
-  .contact-form input, .contact-form textarea { width:100%; padding:16px 18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#fff; font-size:15px; outline:none; margin-bottom:14px; font-family:'Inter',sans-serif; }
-  .contact-form textarea { resize:vertical; min-height:120px; }
-  .contact-form button { width:100%; background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:16px; border-radius:12px; font-weight:700; font-size:16px; cursor:pointer; }
-  footer { padding:60px 40px 30px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; }
-  .footer-logo { font-size:24px; font-weight:900; margin-bottom:20px; }
-  .footer-logo span { color:#00d4ff; }
-  .footer-info { color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:20px; line-height:1.8; }
-  .footer-copy { color:rgba(255,255,255,0.3); font-size:13px; }
-  @media (max-width:900px) {
-    nav { padding:14px 20px; }
-    .nav-links { display:none; }
-    .hero h1 { font-size:40px; letter-spacing:-1px; }
-    .hero p { font-size:16px; }
-    .section-title h2 { font-size:30px; letter-spacing:-1px; }
-    .hero, .section, .contact-section { padding-left:20px; padding-right:20px; }
-  }
-
-/* EASY BUY PREMIUM UPGRADE */
-html { scroll-behavior: smooth; scroll-padding-top: 90px; }
-body {
-  background:
-    radial-gradient(ellipse at 15% 8%, rgba(0,212,255,.09), transparent 34%),
-    radial-gradient(ellipse at 88% 32%, rgba(0,92,255,.08), transparent 36%),
-    #070b14;
-}
-nav {
-  transition: background .3s ease, box-shadow .3s ease;
-  box-shadow: 0 8px 35px rgba(0,0,0,.12);
-}
-.logo-icon {
-  box-shadow: 0 0 24px rgba(0,212,255,.25);
-  animation: ebLogoGlow 4s ease-in-out infinite;
-}
-.hero::before {
-  animation: ebAura 9s ease-in-out infinite alternate;
-}
-.badge {
-  box-shadow: 0 0 24px rgba(0,212,255,.08);
-  animation: ebBadgeGlow 4s ease-in-out infinite;
-}
-.hero h1 {
-  text-wrap: balance;
-  animation: ebRise .8s ease both;
-}
-.hero p { animation: ebRise 1s ease both; }
-.hero-buttons { animation: ebRise 1.2s ease both; }
-.btn-primary, .btn-secondary, .nav-btn, .order-btn,
-.contact-form button, .modal .confirm, .modal .cancel {
-  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
-}
-.btn-primary:hover, .nav-btn:hover, .order-btn:hover,
-.contact-form button:hover, .modal .confirm:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(0,150,255,.24);
-  filter: brightness(1.08);
-}
-.btn-secondary:hover, .modal .cancel:hover {
-  transform: translateY(-2px);
-  background: rgba(255,255,255,.1);
-}
-.how-step {
-  border: 1px solid rgba(255,255,255,.055);
-  border-radius: 20px;
-  padding: 28px 20px;
-  background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
-  transition: transform .3s ease, border-color .3s ease, background .3s ease;
-}
-.how-step:hover {
-  transform: translateY(-7px);
-  border-color: rgba(0,212,255,.28);
-  background: rgba(0,212,255,.045);
-}
-.how-num {
-  box-shadow: 0 8px 25px rgba(0,114,255,.2);
-  transition: transform .3s ease;
-}
-.how-step:hover .how-num { transform: scale(1.08) rotate(-5deg); }
-.phone-card {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(145deg,rgba(18,29,49,.92),rgba(10,15,27,.96));
-  border-color: rgba(255,255,255,.09);
-  box-shadow: 0 12px 35px rgba(0,0,0,.12);
-  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
-}
-.phone-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 12%;
-  width: 76%; height: 1px;
-  background: linear-gradient(90deg,transparent,rgba(0,212,255,.5),transparent);
-  pointer-events: none;
-}
-.phone-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(0,212,255,.3);
-  box-shadow: 0 20px 45px rgba(0,0,0,.25), 0 0 25px rgba(0,150,255,.055);
-}
-.phone-img-box {
-  border: 1px solid rgba(255,255,255,.045);
-  background: radial-gradient(ellipse at center,rgba(0,114,255,.12),transparent 70%),linear-gradient(135deg,#0a1220,#0f1a30);
-}
-.phone-img-box img { transition: transform .45s ease; }
-.phone-card:hover .phone-img-box img { transform: scale(1.045); }
-.phone-auto-card .phone-shape {
-  box-shadow: 0 0 28px rgba(0,212,255,.1);
-  animation: ebPhoneFloat 4s ease-in-out infinite;
-}
-.dp-box { box-shadow: inset 0 1px rgba(255,255,255,.035); }
-.plan-tab { transition: background .2s ease, transform .2s ease, border-color .2s ease; }
-.plan-tab:not(.disabled):hover { transform: translateY(-2px); border-color: rgba(0,212,255,.5); }
-.plan-tab.active { box-shadow: 0 5px 15px rgba(0,114,255,.2); }
-.plan-display { transition: border-color .25s ease; }
-.phone-card:focus-within, .contact-form:focus-within {
-  border-color: rgba(0,212,255,.28);
-}
-.modal {
-  box-shadow: 0 25px 90px rgba(0,0,0,.45), 0 0 35px rgba(0,212,255,.06);
-  animation: ebModalIn .25s ease both;
-}
-.modal input:focus, .modal textarea:focus,
-.contact-form input:focus, .contact-form textarea:focus {
-  border-color: rgba(0,212,255,.6);
-  box-shadow: 0 0 0 3px rgba(0,212,255,.08);
-}
-button:focus-visible, a:focus-visible, input:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid #00d4ff;
-  outline-offset: 3px;
-}
-@keyframes ebRise {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes ebAura {
-  from { opacity: .65; scale: .92; }
-  to { opacity: 1; scale: 1.06; }
-}
-@keyframes ebBadgeGlow {
-  0%,100% { border-color: rgba(0,212,255,.2); }
-  50% { border-color: rgba(0,212,255,.5); }
-}
-@keyframes ebLogoGlow {
-  0%,100% { box-shadow: 0 0 15px rgba(0,212,255,.15); }
-  50% { box-shadow: 0 0 25px rgba(0,212,255,.35); }
-}
-@keyframes ebPhoneFloat {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-@keyframes ebModalIn {
-  from { opacity: 0; transform: translateY(12px) scale(.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@media (max-width: 600px) {
-  nav { padding: 12px 14px; }
-  .logo { font-size: 19px; gap: 7px; }
-  .logo-icon { width: 32px; height: 32px; font-size: 16px; }
-  .nav-btn { padding: 10px 14px; font-size: 12px; }
-  .hero { min-height: 88vh; padding: 120px 18px 65px; }
-  .hero h1 { font-size: clamp(35px, 9vw, 46px); line-height: 1.08; letter-spacing: -1.4px; }
-  .hero p { font-size: 15px; line-height: 1.75; }
-  .badge { font-size: 11px; padding: 8px 12px; margin-bottom: 24px; }
-  .hero-buttons { gap: 11px; }
-  .btn-primary, .btn-secondary { padding: 14px 20px; font-size: 14px; }
-  .section { padding-top: 72px; padding-bottom: 72px; }
-  .section-title { margin-bottom: 36px; }
-  .section-title h2 { font-size: clamp(27px, 7vw, 34px); }
-  .phones-grid { grid-template-columns: minmax(0,1fr); gap: 18px; }
-  .phone-card { padding: 18px; border-radius: 20px; }
-  .phone-img-box { height: 220px; }
-  .dp-box .amount { font-size: 25px; }
-  .contact-section { padding-top: 72px; padding-bottom: 72px; }
-  .contact-form { padding: 22px 17px; border-radius: 18px; }
-  .modal { padding: 30px 18px 22px; border-radius: 20px; }
-  .modal .actions { flex-direction: column; }
-  footer { padding: 45px 20px 25px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
-}
-
-
-/* EASY BUY LAYER 2 MOTION */
-.hero { isolation: isolate; }
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 240px;
-  height: 240px;
-  right: 5%;
-  top: 22%;
-  border: 1px solid rgba(0,212,255,.13);
-  border-radius: 50%;
-  box-shadow: 0 0 55px rgba(0,114,255,.08), inset 0 0 45px rgba(0,212,255,.04);
-  pointer-events: none;
-  z-index: 0;
-  animation: ebOrbit 12s ease-in-out infinite alternate;
-}
-.hero-content > * { will-change: opacity, transform; }
-.section-title .tag { transition: box-shadow .3s ease; }
-.section-title:hover .tag { box-shadow: 0 0 22px rgba(0,212,255,.12); }
-.eb-reveal {
-  opacity: 0;
-  transform: translateY(26px);
-  transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
-}
-.eb-reveal.eb-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.how-step.eb-reveal:nth-child(2) { transition-delay: .12s; }
-.how-step.eb-reveal:nth-child(3) { transition-delay: .24s; }
-.phone-card.eb-reveal { transition-duration: .65s; }
-@keyframes ebOrbit {
-  0% { transform: translate3d(0,0,0) rotate(0deg) scale(.92); }
-  50% { transform: translate3d(-18px,20px,0) rotate(8deg) scale(1.04); }
-  100% { transform: translate3d(12px,-12px,0) rotate(-5deg) scale(.98); }
-}
-@media (max-width: 600px) {
-  .hero::after { width: 150px; height: 150px; right: -35px; top: 16%; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .eb-reveal { opacity: 1; transform: none; }
-}
-
-
-/* EASY BUY LAYER 3 CATALOGUE */
-.catalog-tools {
-  max-width: 850px;
-  margin: 0 auto 28px;
-}
-#phoneSearch {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 16px 18px;
-  color: #fff;
-  background: rgba(255,255,255,.045);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 14px;
-  font: inherit;
-  outline: none;
-  transition: border-color .2s ease, box-shadow .2s ease;
-}
-#phoneSearch:focus {
-  border-color: #00d4ff;
-  box-shadow: 0 0 0 3px rgba(0,212,255,.09);
-}
-.brand-filters {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 16px;
-}
-.brand-filter {
-  padding: 10px 17px;
-  border: 1px solid rgba(255,255,255,.13);
-  border-radius: 999px;
-  color: #dce8f8;
-  background: rgba(255,255,255,.04);
-  cursor: pointer;
-  transition: .2s ease;
-}
-.brand-filter:hover,
-.brand-filter.active {
-  color: #06111e;
-  background: linear-gradient(135deg,#00d4ff,#4b8dff);
-  border-color: transparent;
-}
-#phoneResultsCount {
-  color: #9aacc5;
-  font-size: 13px;
-  text-align: center;
-  margin: 15px 0 0;
-}
-.no-phone-results {
-  grid-column: 1 / -1;
-  padding: 35px 15px;
-  color: #b9c7dc;
-  text-align: center;
-}
-@media (max-width: 600px) {
-  .brand-filters { gap: 8px; }
-  .brand-filter { padding: 9px 13px; font-size: 13px; }
-}
-
+  .selected-box { background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.3); border-radius:10px; padding:12px; margin-bottom:12px; text-align:center; }
+  .selected-box .lbl { font-size:10px; text-transform:uppercase; color:rgba(255,255,255,0.6); letter-spacing:1px; margin-bottom:4px; }
+  .selected-box .val { font-size:18px; font-weight:900; color:#00d4ff; }
+  .selected-box .sub { font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px; margin-bottom:0; }
+  .row { display:flex; justify-content:space-between; font-size:13px; padding:4px 0; }
+  .row .k { color:rgba(255,255,255,0.55); }
+  .row .v { font-weight:700; }
+  .row.total { border-top:1px solid rgba(255,255,255,0.08); margin-top:6px; padding-top:8px; }
+  .row.total .v { color:#00d4ff; font-size:15px; }
+  .order-btn { width:100%; background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:12px; border-radius:10px; font-weight:800; font-size:14px; cursor:pointer; margin-top:10px; }
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; padding:20px; overflow-y:auto; }
+  .overlay.show { display:flex; }
+  .modal { background:#0d1220; border:1px solid rgba(0,212,255,0.25); border-radius:20px; padding:25px 20px; max-width:480px; width:100%; max-height:92vh; overflow-y:auto; position:relative; }
+  .close-x { position:absolute; top:15px; right:15px; background:rgba(255,255,255,0.06); border:none; color:#fff; width:34px; height:34px; border-radius:50%; font-size:18px; cursor:pointer; }
+  .modal h2 { font-size:20px; margin-bottom:6px; }
+  .modal .st { color:rgba(255,255,255,0.5); font-size:13px; margin-bottom:18px; }
+  .big-badge { background:linear-gradient(135deg,#00d4ff,#0072ff); border-radius:14px; padding:16px; text-align:center; margin-bottom:16px; }
+  .big-badge .lbl { font-size:11px; text-transform:uppercase; letter-spacing:2px; opacity:0.9; margin-bottom:4px; }
+  .big-badge .val { font-size:26px; font-weight:900; }
+  .big-badge .sub { font-size:13px; opacity:0.95; margin-top:4px; margin-bottom:0; color:#fff; }
+  .modal input, .modal textarea { width:100%; padding:12px 14px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#fff; font-size:14px; outline:none; margin-bottom:10px; font-family:'Inter',sans-serif; }
+  .wa-btn { width:100%; background:linear-gradient(135deg,#25D366,#128C7E); color:#fff; border:none; padding:16px; border-radius:12px; font-weight:800; font-size:16px; cursor:pointer; margin-top:6px; }
+  .cancel-btn { width:100%; background:rgba(255,255,255,0.06); color:#fff; border:1px solid rgba(255,255,255,0.15); padding:12px; border-radius:12px; font-weight:700; cursor:pointer; font-size:14px; margin-top:8px; }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo"><div class="logo-icon">🛍️</div>Easy<span>Buy</span></div>
-  <div class="nav-links">
-    <a href="#phones">Phones</a>
-    <a href="#how">How It Works</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <button class="nav-btn" onclick="document.getElementById('phones').scrollIntoView()">Browse Phones</button>
-</nav>
+<div class="test-banner">TEST — Months + Weeks labels, English / Hausa</div>
 
-<section class="hero">
-  <div class="hero-content">
-    <div class="badge">🛍️ Nigeria's Trusted Phone Store</div>
-    <h1>Own a Phone Today, <span>Pay Small Small</span></h1>
-    <p>Pick your phone. Pay a small down payment. Then pay weekly at your own pace — 13, 17, 26, or 39 weeks. No stress, no hidden fees.</p>
-    <div class="hero-buttons">
-      <button class="btn-primary" onclick="document.getElementById('phones').scrollIntoView()">📱 Browse Phones</button>
-      <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView()">How It Works</button>
-    </div>
+<div class="lang-screen" id="langScreen">
+  <h1>Easy <span>Buy</span></h1>
+  <p class="sub">Choose your language</p>
+  <p class="sub-ha">Zaɓi harshen da kake so</p>
+  <div class="lang-btns">
+    <button class="lang-btn" onclick="setLang('en')"><span class="flag">🇬🇧</span>English</button>
+    <button class="lang-btn" onclick="setLang('ha')"><span class="flag">🇳🇬</span>Hausa</button>
   </div>
-</section>
+</div>
 
-<section class="section" id="how">
-  <div class="section-title">
-    <div class="tag">How It Works</div>
-    <h2>Get Your Phone in 3 Simple Steps</h2>
-    <p>Simple, transparent, and easy — designed for everyday Nigerians</p>
-  </div>
-  <div class="how-grid">
-    <div class="how-step"><div class="how-num">1</div><h3>Pick Your Phone</h3><p>Choose from Itel, Infinix, TECNO, and more.</p></div>
-    <div class="how-step"><div class="how-num">2</div><h3>Pay Down Payment</h3><p>Pay the down payment shown for your chosen phone.</p></div>
-    <div class="how-step"><div class="how-num">3</div><h3>Pay Weekly</h3><p>Pay your weekly amount in person each week. 13, 17, 26, or 39 weeks.</p></div>
-  </div>
-</section>
+<div class="site" id="site">
+  <button class="lang-toggle" onclick="showLangScreen()"><span id="langToggleText">HA</span></button>
+  <h1 class="site-title">Easy <span>Buy</span></h1>
+  <p class="sub" id="siteSub">Pick a phone. Pay small small.</p>
 
-<section class="section" id="phones">
-  <div class="section-title">
-    <div class="tag">Our Phones</div>
-    <h2>Available Phones &amp; Plans</h2>
-    <p>All prices are in Naira. Down payment is paid once. Weekly payment is paid every week until you finish.</p>
-  </div>
-  <div class="catalog-tools">
-    <input id="phoneSearch" type="search" placeholder="🔍 Search phone name, model or storage..." aria-label="Search phones">
-    <div class="brand-filters">
-      <button type="button" class="brand-filter active" data-brand="All">All Phones</button>
-      <button type="button" class="brand-filter" data-brand="Itel">Itel</button>
-      <button type="button" class="brand-filter" data-brand="Infinix">Infinix</button>
-      <button type="button" class="brand-filter" data-brand="TECNO">TECNO</button>
-    </div>
-    <p id="phoneResultsCount" aria-live="polite">Showing 11 phones</p>
-  </div>
-  <div class="phones-grid" id="phonesGrid"></div>
-</section>
+  <div class="info-banner" id="infoBanner"></div>
 
-<section class="contact-section" id="contact">
-  <div class="section-title">
-    <div class="tag">Contact Us</div>
-    <h2>Have Questions?</h2>
-    <p>Send us a message. We'll respond within 30 minutes during business hours.</p>
-  </div>
-  <form class="contact-form" id="contactForm">
-    <input type="text" name="name" placeholder="Full Name" required>
-    <input type="tel" name="phone" placeholder="Phone Number" required>
-    <input type="email" name="email" placeholder="Email (optional)">
-    <textarea name="message" placeholder="Your message..." required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
-</section>
+  <div class="grid" id="grid"></div>
+</div>
 
-<footer>
-  <div class="footer-logo">Easy<span>Buy</span></div>
-  <div class="footer-info">
-    📞 Call / WhatsApp: +234 XXX XXX XXXX<br>
-    📧 Email: easybuy@example.com<br>
-    📍 Location: Kano, Nigeria
-  </div>
-  <div class="footer-copy">© 2026 Easy Buy. All rights reserved.</div>
-</footer>
-
-<div class="modal-overlay" id="orderModal">
+<div class="overlay" id="overlay">
   <div class="modal">
     <button class="close-x" onclick="closeModal()">✕</button>
-    <h2>Place Your Order</h2>
-    <p class="subtitle">Fill in your details and we'll call you to confirm.</p>
-    <div class="summary" id="modalSummary"></div>
-    <form id="orderForm">
-      <input type="text" name="customer_name" placeholder="Your Full Name" required>
-      <input type="tel" name="customer_phone" placeholder="Your Phone Number" required>
-      <input type="text" name="customer_address" placeholder="Your Address" required>
-      <textarea name="notes" placeholder="Any notes? (optional)"></textarea>
-      <div class="actions">
-        <button type="button" class="cancel" onclick="closeModal()">Cancel</button>
-        <button type="submit" class="confirm">Confirm Order</button>
-      </div>
-    </form>
+    <h2 id="modalTitle">Place Your Order</h2>
+    <p class="st" id="modalSub">Fill in your details</p>
+    <div class="big-badge" id="planBadge"></div>
+    <div id="summary"></div>
+    <input type="text" id="cName" placeholder="Full Name">
+    <input type="tel" id="cPhone" placeholder="Phone Number">
+    <input type="text" id="cAddress" placeholder="Address">
+    <textarea id="cNotes" placeholder="Any notes? (optional)" rows="2"></textarea>
+    <button class="wa-btn" onclick="sendWhatsApp()" id="waBtn">Send Order via WhatsApp</button>
+    <button class="cancel-btn" onclick="closeModal()" id="cancelBtn">Cancel</button>
   </div>
 </div>
 
 <script>
+const WHATSAPP_NUMBER = "2349123915098";
+
+const PLAN_INFO = {
+  13: { en:{months:"3 Months", payments:"13 payments"}, ha:{months:"Watanni 3", payments:"Biya sau 13"} },
+  17: { en:{months:"4 Months", payments:"17 payments"}, ha:{months:"Watanni 4", payments:"Biya sau 17"} },
+  26: { en:{months:"6 Months", payments:"26 payments"}, ha:{months:"Watanni 6", payments:"Biya sau 26"} },
+  39: { en:{months:"9 Months", payments:"39 payments"}, ha:{months:"Watanni 9", payments:"Biya sau 39"} }
+};
+
+const T = {
+  en: {
+    tagline: "Pick a phone. Pay small small.",
+    downPayment: "Down Payment",
+    choosePlan: "Choose your payment plan:",
+    youSelected: "You selected",
+    orderBtn: "Order This Phone",
+    modalTitle: "Place Your Order",
+    modalSub: "Fill in your details and send via WhatsApp",
+    changePlan: "Change plan:",
+    weekly: "Weekly payment",
+    totalOutstanding: "Total Outstanding",
+    totalCost: "Total Cost",
+    name: "Full Name",
+    phone: "Phone Number",
+    address: "Address",
+    notes: "Any notes? (optional)",
+    send: "Send Order via WhatsApp",
+    cancel: "Cancel",
+    switchLang: "HA",
+    info: "💡 <strong>How payment works:</strong> You pay <strong>every 8 days</strong> (the same day each week). If you take the phone today, your next payment is due in <strong>7 days</strong>. Longer plans mean lower weekly payments but a higher total.",
+    confirmMsg: "Please fill in Name, Phone, and Address"
+  },
+  ha: {
+    tagline: "Zaɓi waya. Biya kaɗan-kaɗan.",
+    downPayment: "Kuɗin Farko",
+    choosePlan: "Zaɓi shirin biyan ku:",
+    youSelected: "Ka zaɓa",
+    orderBtn: "Yi Oda Wannan Wayar",
+    modalTitle: "Yi Odarka",
+    modalSub: "Cika bayaninka sannan ka aika ta WhatsApp",
+    changePlan: "Canza shiri:",
+    weekly: "Biyan mako",
+    totalOutstanding: "Jimlar da ya Rage",
+    totalCost: "Jimlar Kuɗi",
+    name: "Cikakken Suna",
+    phone: "Lambar Waya",
+    address: "Adireshi",
+    notes: "Wani bayani? (na zaɓi)",
+    send: "Aika Oda ta WhatsApp",
+    cancel: "Sokewa",
+    switchLang: "EN",
+    info: "💡 <strong>Yadda biya yake aiki:</strong> Kuna biya <strong>duk bayan kwana 8</strong> (wannan rana kowace mako). Idan ka ɗauki wayar yau, biya na gaba zai kasance cikin <strong>kwana 8</strong>. Dogon shiri yana nufin ƙaramin biyan mako amma jimlar kuɗi ya fi.",
+    confirmMsg: "Da fatan za a cika Suna, Lambar Waya, da Adireshi"
+  }
+};
+
+let LANG = "en";
+
 const phones = [
   { id:1, name:"Itel A100cs", model:"A6611L 64/2 GB Vintage Green", brand:"Itel", dp:33240, w13:9374, w17:7669, w26:null, w39:null, image:"/images/itel-a100cs.png" },
   { id:2, name:"Itel A300+", model:"A681L 64/4 GB Black", brand:"Itel", dp:44070, w13:12428, w17:10168, w26:7626, w39:5885, image:"/images/itel-a300-plus.png" },
@@ -480,261 +184,222 @@ const phones = [
   { id:5, name:"Itel CITY 200s", model:"C681LN 128/4 GB Gray", brand:"Itel", dp:55500, w13:15651, w17:12805, w26:9603, w39:7411, image:"" },
   { id:6, name:"Infinix HOT 70", model:"X6895 128/4 GB Grey", brand:"Infinix", dp:67470, w13:19027, w17:15567, w26:11675, w39:9010, image:"" },
   { id:7, name:"Infinix HOT 70", model:"X6895B 256/6 GB Grey", brand:"Infinix", dp:89970, w13:25373, w17:20759, w26:15568, w39:12014, image:"" },
-{ id:8, name:"TECNO Spark 50", model:"128/4 GB Grey", brand:"TECNO", dp:64380, w13:18156, w17:14854, w26:11140, w39:8597, image:"/images/tecno-spark-50.png" }, 
+  { id:8, name:"TECNO Spark 50", model:"128/4 GB Grey", brand:"TECNO", dp:64380, w13:18156, w17:14854, w26:11140, w39:8597, image:"/images/tecno-spark-50.png" },
   { id:9, name:"TECNO Spark 50 Pro", model:"KO5 128/6 GB Black", brand:"TECNO", dp:100440, w13:28325, w17:23174, w26:17379, w39:13413, image:"/images/tecno-spark-50-pro.png" },
   { id:10, name:"TECNO POP 10 Pro", model:"KM4k 128/4 GB Nebula Violet", brand:"TECNO", dp:43344, w13:12224, w17:10001, w26:7500, w39:5788, image:"/images/tecno-pop-10-pro.png" },
   { id:11, name:"TECNO Pop 20", model:"Kn3 64/4 GB Grey", brand:"TECNO", dp:43088, w13:10708, w17:8031, w26:6198, w39:null, image:"/images/tecno-pop-20.png" }
 ];
 
 function formatNaira(n) { return '₦' + n.toLocaleString('en-NG'); }
+function t(key) { return T[LANG][key]; }
+function planInfo(weeks) { return PLAN_INFO[weeks][LANG]; }
 
-function phoneImageHTML(p) {
-  if (p.image && p.image.trim() !== "") {
-    return '<img src="' + p.image + '" alt="' + p.name + '" onerror="this.parentElement.innerHTML=autoCardHTML(' + p.id + ');">';
-  }
-  return autoCardHTML(p.id);
+function setLang(lang) {
+  LANG = lang;
+  try { localStorage.setItem('easybuy_lang', lang); } catch(e) {}
+  document.getElementById('langScreen').style.display = 'none';
+  document.getElementById('site').style.display = 'block';
+  document.getElementById('langToggleText').textContent = t('switchLang');
+  applyTranslations();
+  renderCards();
 }
 
-function autoCardHTML(id) {
+function showLangScreen() {
+  document.getElementById('langScreen').style.display = 'flex';
+  document.getElementById('site').style.display = 'none';
+}
+
+function applyTranslations() {
+  document.getElementById('siteSub').textContent = t('tagline');
+  document.getElementById('infoBanner').innerHTML = t('info');
+  document.getElementById('modalTitle').textContent = t('modalTitle');
+  document.getElementById('modalSub').textContent = t('modalSub');
+  document.getElementById('waBtn').textContent = t('send');
+  document.getElementById('cancelBtn').textContent = t('cancel');
+  document.getElementById('cName').placeholder = t('name');
+  document.getElementById('cPhone').placeholder = t('phone');
+  document.getElementById('cAddress').placeholder = t('address');
+  document.getElementById('cNotes').placeholder = t('notes');
+}
+
+function cardImageHTML(p) {
+  if (p.image && p.image.trim() !== "") {
+    return '<img src="' + p.image + '" alt="' + p.name + '" onerror="this.parentElement.innerHTML=fallbackHTML(' + p.id + ');">';
+  }
+  return fallbackHTML(p.id);
+}
+
+function fallbackHTML(id) {
   const p = phones.find(x => x.id === id);
-  if (!p) return '';
-  return '<div class="phone-auto-card">' +
-    '<div class="brand-badge">' + p.brand + '</div>' +
-    '<div class="phone-shape">📱</div>' +
-    '<div class="phone-name">' + p.name + '</div>' +
-    '<div class="phone-spec">' + p.model + '</div>' +
+  return '<div class="card-fallback">' +
+    '<div class="badge">' + p.brand + '</div>' +
+    '<div class="shape">📱</div>' +
+    '<div class="name">' + p.name + '</div>' +
   '</div>';
 }
 
-let activePhoneBrand = 'All';
+function planTabHTML(weeks, available, active) {
+  const info = planInfo(weeks);
+  const cls = (available ? '' : 'disabled') + ' ' + (active ? 'active' : '');
+  return '<div class="plan-tab ' + cls + '" ' +
+    (available ? 'onclick="selectPlan(' + weeks + ',this)"' : '') + '>' +
+    '<span class="mo">' + info.months + '</span>' +
+    '<span class="wk">' + info.payments + '</span>' +
+  '</div>';
+}
 
-function renderPhones() {
-  const grid = document.getElementById('phonesGrid');
-  const searchInput = document.getElementById('phoneSearch');
-  const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+function renderCards() {
+  const allPlans = [13, 17, 26, 39];
+  document.getElementById('grid').innerHTML = phones.map(p => {
+    const available = allPlans.filter(w => p['w' + w]);
+    const firstPlan = available[0] || 13;
+    const tabs = allPlans.map(w => planTabHTML(w, !!p['w'+w], w === firstPlan)).join('');
 
-  const filteredPhones = phones.filter(p => {
-    const brandMatches = activePhoneBrand === 'All' ||
-      p.brand.toLowerCase() === activePhoneBrand.toLowerCase();
-    const searchable = [p.name, p.model, p.brand].join(' ').toLowerCase();
-    return brandMatches && searchable.includes(query);
-  });
-
-  const count = document.getElementById('phoneResultsCount');
-  if (count) {
-    count.textContent = filteredPhones.length === phones.length &&
-      !query && activePhoneBrand === 'All'
-      ? 'Showing ' + phones.length + ' phones'
-      : 'Showing ' + filteredPhones.length + ' of ' + phones.length + ' phones';
-  }
-
-  grid.innerHTML = filteredPhones.map(p => {
-    const dpText = p.dp ? formatNaira(p.dp) : 'Ask us';
-    const plans = [
-      { weeks:13, price:p.w13 },
-      { weeks:17, price:p.w17 },
-      { weeks:26, price:p.w26 },
-      { weeks:39, price:p.w39 }
-    ];
-    const availablePlans = plans.filter(pl => pl.price);
-    const firstPlan = availablePlans[0] || plans[0];
-
-    const tabsHTML = plans.map(pl => {
-      const disabled = !pl.price;
-      const active = (pl.weeks === firstPlan.weeks) ? 'active' : '';
-      return '<div class="plan-tab ' + active + ' ' + (disabled?'disabled':'') + '" ' + (disabled?'':'onclick="selectPlan(' + p.id + ',' + pl.weeks + ',this)"') + '>' + pl.weeks + 'w</div>';
-    }).join('');
-
-    return '<div class="phone-card">' +
-      '<div class="phone-img-box">' + phoneImageHTML(p) + '</div>' +
-      '<div class="phone-header"><div><h3>' + p.name + '</h3><p>' + p.model + '</p></div></div>' +
-      '<div class="dp-box"><div class="label">Down Payment</div><div class="amount">' + dpText + '</div></div>' +
-      '<div class="plan-label">Choose your weekly plan:</div>' +
-      '<div class="plan-tabs" id="tabs-' + p.id + '">' + tabsHTML + '</div>' +
-      '<div class="plan-display" id="display-' + p.id + '"></div>' +
-      '<button class="order-btn" onclick="openOrder(' + p.id + ')">Order This Phone</button>' +
+    return '<div class="card">' +
+      '<div class="card-img">' + cardImageHTML(p) + '</div>' +
+      '<h3>' + p.name + '</h3>' +
+      '<p>' + p.model + '</p>' +
+      '<div class="dp"><div class="lbl">' + t('downPayment') + '</div><div class="amt">' + formatNaira(p.dp) + '</div></div>' +
+      '<div class="plan-lbl">' + t('choosePlan') + '</div>' +
+      '<div class="plan-tabs" id="tabs-' + p.id + '">' + tabs + '</div>' +
+      '<div class="selected-box"><div class="lbl">' + t('youSelected') + '</div><div class="val" id="sel-' + p.id + '"></div><div class="sub" id="selsub-' + p.id + '"></div></div>' +
+      '<div id="brk-' + p.id + '"></div>' +
+      '<button class="order-btn" onclick="openOrder(' + p.id + ')">' + t('orderBtn') + '</button>' +
     '</div>';
   }).join('');
 
-  if (!filteredPhones.length) {
-    grid.innerHTML = '<p class="no-phone-results">No phones found. Try another search.</p>';
-  }
-
-  filteredPhones.forEach(p => {
-    const available = [13,17,26,39].filter(w => p['w'+w]);
-    if (available.length) updateDisplay(p.id, available[0]);
+  phones.forEach(p => {
+    const available = [13, 17, 26, 39].filter(w => p['w' + w]);
+    if (available.length) showBreakdown(p.id, available[0]);
   });
 }
 
-function selectPlan(phoneId, weeks, el) {
-  const parent = el.parentElement;
-  parent.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+function selectPlan(weeks, el) {
+  const card = el.closest('.card');
+  card.querySelectorAll('.plan-tab').forEach(x => x.classList.remove('active'));
   el.classList.add('active');
-  updateDisplay(phoneId, weeks);
+  const phoneId = parseInt(card.querySelector('.plan-tabs').id.replace('tabs-',''));
+  showBreakdown(phoneId, weeks);
 }
 
-function updateDisplay(phoneId, weeks) {
+function showBreakdown(phoneId, weeks) {
   const p = phones.find(x => x.id === phoneId);
-  const weekly = p['w'+weeks];
+  const weekly = p['w' + weeks];
   if (!weekly) return;
+  const info = planInfo(weeks);
+  document.getElementById('sel-' + phoneId).textContent = info.months;
+  document.getElementById('selsub-' + phoneId).textContent = '(' + info.payments + ')';
   const total = weekly * weeks;
-  const dpText = p.dp ? formatNaira(p.dp) : 'TBD';
-  const grandTotal = p.dp ? p.dp + total : null;
-
-  document.getElementById('display-'+phoneId).innerHTML =
-    '<div class="row"><span class="label">Down Payment</span><span class="value">' + dpText + '</span></div>' +
-    '<div class="row"><span class="label">Weekly x ' + weeks + ' weeks</span><span class="value">' + formatNaira(weekly) + '</span></div>' +
-    '<div class="row"><span class="label">Total Outstanding</span><span class="value">' + formatNaira(total) + '</span></div>' +
-    (grandTotal ? '<div class="row total"><span class="label">Total Cost</span><span class="value">' + formatNaira(grandTotal) + '</span></div>' : '');
+  const grand = p.dp + total;
+  document.getElementById('brk-' + phoneId).innerHTML =
+    '<div class="row"><span class="k">' + t('weekly') + ' × ' + info.payments + '</span><span class="v">' + formatNaira(weekly) + '</span></div>' +
+    '<div class="row"><span class="k">' + t('totalOutstanding') + '</span><span class="v">' + formatNaira(total) + '</span></div>' +
+    '<div class="row total"><span class="k">' + t('totalCost') + '</span><span class="v">' + formatNaira(grand) + '</span></div>';
 }
 
 let currentOrder = null;
 
 function openOrder(phoneId) {
   const p = phones.find(x => x.id === phoneId);
-  const activeTab = document.querySelector('#tabs-'+phoneId+' .plan-tab.active');
-  const weeks = activeTab ? parseInt(activeTab.textContent) : 13;
-  renderModalSummary(p, weeks);
-  document.getElementById('orderModal').classList.add('show');
+  const activeTab = document.querySelector('#tabs-' + phoneId + ' .plan-tab.active');
+  const weeks = activeTab ? planWeeksFromTab(activeTab) : 13;
+  currentOrder = { phone: p, weeks: weeks };
+  refreshModal();
+  document.getElementById('overlay').classList.add('show');
 }
 
-function renderModalSummary(p, weeks) {
+function planWeeksFromTab(tabEl) {
+  const mo = tabEl.querySelector('.mo').textContent;
+  for (const w in PLAN_INFO) {
+    if (PLAN_INFO[w][LANG].months === mo) return parseInt(w);
+  }
+  return 13;
+}
+
+function refreshModal() {
+  const p = currentOrder.phone;
+  const weeks = currentOrder.weeks;
+  const info = planInfo(weeks);
   const weekly = p['w' + weeks];
   const total = weekly * weeks;
-  const plans = [13, 17, 26, 39];
+  const grand = p.dp + total;
 
-  const tabsHTML = plans.map(w => {
-    const disabled = !p['w' + w];
-    const active = (w === weeks) ? 'active' : '';
-    return '<div class="plan-tab ' + active + ' ' + (disabled ? 'disabled' : '') + '" ' + (disabled ? '' : 'onclick="switchModalPlan(' + p.id + ',' + w + ')"') + '>' + w + 'w</div>';
-  }).join('');
+  document.getElementById('planBadge').innerHTML =
+    '<div class="lbl">' + t('youSelected') + '</div>' +
+    '<div class="val">' + info.months + '</div>' +
+    '<div class="sub">' + info.payments + '</div>';
 
-  document.getElementById('modalSummary').innerHTML =
-    '<div><strong>' + p.name + '</strong> - ' + p.model + '</div>' +
-    '<div style="margin-top:14px;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;">Choose your weekly plan:</div>' +
-    '<div class="plan-tabs" style="margin-bottom:14px;">' + tabsHTML + '</div>' +
-    '<div style="margin-top:8px;">Down Payment: <strong>' + (p.dp ? formatNaira(p.dp) : 'TBD') + '</strong></div>' +
-    '<div>Weekly Payment: <strong>' + formatNaira(weekly) + '</strong> x ' + weeks + ' weeks</div>' +
-    '<div>Total Outstanding: <strong>' + formatNaira(total) + '</strong></div>' +
-    (p.dp ? '<div>Total Cost: <strong>' + formatNaira(p.dp + total) + '</strong></div>' : '');
+  const allPlans = [13, 17, 26, 39];
+  const tabs = allPlans.map(w => planTabHTML(w, !!p['w'+w], w === weeks).replace(/onclick="selectPlan\((\d+),this\)"/, 'onclick="switchPlan($1)"')).join('');
 
-  currentOrder = {
-    phone_model: p.name + ' - ' + p.model,
-    down_payment: p.dp || 'TBD',
-    weeks: weeks,
-    weekly_payment: weekly,
-    total_outstanding: total,
-    total_cost: p.dp ? p.dp + total : null
-  };
+  document.getElementById('summary').innerHTML =
+    '<div style="margin-bottom:14px;"><strong style="color:#00d4ff;">' + p.name + '</strong> — ' + p.model + '</div>' +
+    '<div class="plan-lbl">' + t('changePlan') + '</div>' +
+    '<div class="plan-tabs" style="margin-bottom:14px;">' + tabs + '</div>' +
+    '<div class="row"><span class="k">' + t('downPayment') + '</span><span class="v">' + formatNaira(p.dp) + '</span></div>' +
+    '<div class="row"><span class="k">' + t('weekly') + ' × ' + info.payments + '</span><span class="v">' + formatNaira(weekly) + '</span></div>' +
+    '<div class="row"><span class="k">' + t('totalOutstanding') + '</span><span class="v">' + formatNaira(total) + '</span></div>' +
+    '<div class="row total"><span class="k">' + t('totalCost') + '</span><span class="v">' + formatNaira(grand) + '</span></div>' +
+    '<div style="height:14px;"></div>';
 }
 
-function switchModalPlan(phoneId, weeks) {
-  const p = phones.find(x => x.id === phoneId);
-  renderModalSummary(p, weeks);
-}
+function switchPlan(weeks) { currentOrder.weeks = weeks; refreshModal(); }
+function closeModal() { document.getElementById('overlay').classList.remove('show'); }
 
-function closeModal() { document.getElementById('orderModal').classList.remove('show'); }
+function sendWhatsApp() {
+  const p = currentOrder.phone;
+  const weeks = currentOrder.weeks;
+  const info = planInfo(weeks);
+  const weekly = p['w' + weeks];
+  const total = weekly * weeks;
+  const grand = p.dp + total;
 
-document.getElementById('orderForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  const payload = { ...data, ...currentOrder };
+  const name = document.getElementById('cName').value.trim();
+  const phone = document.getElementById('cPhone').value.trim();
+  const address = document.getElementById('cAddress').value.trim();
+  const notes = document.getElementById('cNotes').value.trim();
+
+  if (!name || !phone || !address) {
+    alert(t('confirmMsg'));
+    return;
+  }
+
+  let msg = '';
+  msg += '🛒 *NEW ORDER — Easy Buy*\n\n';
+  msg += '📱 *Phone:* ' + p.name + '\n';
+  msg += '💾 *Model:* ' + p.model + '\n\n';
+  msg += '📋 *Plan:* ' + info.months + ' (' + info.payments + ')\n';
+  msg += '💰 *Down Payment:* ' + formatNaira(p.dp) + '\n';
+  msg += '📅 *Weekly Payment:* ' + formatNaira(weekly) + '\n';
+  msg += '📊 *Total Outstanding:* ' + formatNaira(total) + '\n';
+  msg += '💵 *Total Cost:* ' + formatNaira(grand) + '\n\n';
+  msg += '👤 *Name:* ' + name + '\n';
+  msg += '📞 *Phone:* ' + phone + '\n';
+  msg += '📍 *Address:* ' + address + '\n';
+  if (notes) msg += '📝 *Notes:* ' + notes + '\n';
+
   try {
-    const res = await fetch('/api/order', {
+    fetch('/api/order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const result = await res.json();
-    alert(result.message || 'Order placed!');
-    e.target.reset();
-    closeModal();
-  } catch (err) { alert('Error sending order. Please try again.'); }
-});
+      body: JSON.stringify({
+        customer_name: name, customer_phone: phone, customer_address: address, notes: notes,
+        phone_model: p.name + ' — ' + p.model,
+        plan_label: info.months + ' (' + info.payments + ')',
+        down_payment: p.dp, weeks: weeks, weekly_payment: weekly,
+        total_outstanding: total, total_cost: grand
+      })
+    }).catch(() => {});
+  } catch (e) {}
 
-document.getElementById('contactForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  try {
-    await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    alert('Message sent! We will contact you shortly.');
-    e.target.reset();
-  } catch (err) { alert('Error sending. Please try again.'); }
-});
-
-const phoneSearch = document.getElementById('phoneSearch');
-if (phoneSearch) {
-  phoneSearch.addEventListener('input', renderPhones);
+  const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
 }
 
-document.querySelectorAll('.brand-filter').forEach(button => {
-  button.addEventListener('click', () => {
-    activePhoneBrand = button.dataset.brand || 'All';
-    document.querySelectorAll('.brand-filter').forEach(item => {
-      item.classList.toggle('active', item === button);
-    });
-    renderPhones();
-  });
-});
-
-renderPhones();
+try {
+  const saved = localStorage.getItem('easybuy_lang');
+  if (saved === 'en' || saved === 'ha') setLang(saved);
+} catch(e) {}
 </script>
-
-<!-- EASY BUY LAYER 2 MOTION -->
-<script>
-(function () {
-  const targets = '.section-title, .how-step, .phone-card, .contact-form, footer';
-  let observer = null;
-
-  function prepareReveal(root) {
-    const elements = [];
-    if (root.matches && root.matches(targets)) elements.push(root);
-    if (root.querySelectorAll) elements.push(...root.querySelectorAll(targets));
-
-    elements.forEach(function (el) {
-      if (el.dataset.ebRevealReady) return;
-      el.dataset.ebRevealReady = 'yes';
-      el.classList.add('eb-reveal');
-
-      if (el.classList.contains('phone-card')) {
-        const cards = Array.from(document.querySelectorAll('.phone-card'));
-        el.style.transitionDelay = (Math.min(cards.indexOf(el), 4) * 70) + 'ms';
-      }
-
-      if (observer) observer.observe(el);
-      else el.classList.add('eb-visible');
-    });
-  }
-
-  if ('IntersectionObserver' in window) {
-    observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('eb-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
-  }
-
-  prepareReveal(document);
-
-  const grid = document.getElementById('phonesGrid');
-  if (grid && 'MutationObserver' in window) {
-    new MutationObserver(function (changes) {
-      changes.forEach(function (change) {
-        change.addedNodes.forEach(function (node) {
-          if (node.nodeType === 1) prepareReveal(node);
-        });
-      });
-    }).observe(grid, { childList: true, subtree: true });
-  }
-})();
-</script>
-
 </body>
 </html>
