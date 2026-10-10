@@ -1,122 +1,352 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Easy Buy</title>
+<title>Easy Buy — Own a Phone, Pay Small Small in Kano</title>
+<meta name="description" content="Easy Buy — Kano's trusted phone store. Own a phone today with a small down payment and weekly payments over 3, 4, 6 or 9 months. Genuine phones, flexible plans.">
+<meta property="og:title" content="Easy Buy — Own a Phone, Pay Small Small">
+<meta property="og:description" content="Pick a phone. Pay small down payment. Pay weekly. Genuine phones in Kano.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/images/tecno-spark-50.png">
+<meta name="theme-color" content="#070b14">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2300d4ff'/><text x='50' y='68' font-size='58' text-anchor='middle' font-family='Arial' font-weight='900' fill='white'>EB</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Inter',sans-serif; background:#070b14; color:#fff; padding:20px; }
-  .lang-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:80vh; text-align:center; }
-  .lang-screen h1 { font-size:34px; font-weight:900; margin-bottom:10px; }
-  .lang-screen h1 span { color:#00d4ff; }
-  .lang-screen .sub { color:rgba(255,255,255,0.55); font-size:16px; margin-bottom:8px; }
-  .lang-screen .sub-ha { color:rgba(255,255,255,0.55); font-size:16px; margin-bottom:35px; }
-  .lang-btns { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
-  .lang-btn { background:rgba(255,255,255,0.04); border:2px solid rgba(255,255,255,0.12); color:#fff; padding:28px 40px; border-radius:20px; font-weight:800; font-size:20px; cursor:pointer; transition:.25s; min-width:180px; }
-  .lang-btn:hover, .lang-btn:active { border-color:#00d4ff; background:rgba(0,212,255,0.08); transform:translateY(-3px); }
-  .lang-btn .flag { font-size:36px; display:block; margin-bottom:12px; }
-  .site { display:none; }
-  .lang-toggle { position:fixed; top:14px; right:14px; background:rgba(0,212,255,0.15); border:1px solid rgba(0,212,255,0.4); color:#00d4ff; padding:8px 16px; border-radius:50px; font-weight:700; font-size:13px; cursor:pointer; z-index:100; }
-  h1.site-title { font-size:22px; margin-bottom:10px; }
-  h1.site-title span { color:#00d4ff; }
-  .sub { color:rgba(255,255,255,0.5); font-size:13px; margin-bottom:16px; }
-
-  .info-banner {
-    background:linear-gradient(135deg,rgba(0,212,255,0.12),rgba(0,114,255,0.08));
-    border:1px solid rgba(0,212,255,0.3);
-    border-radius:14px; padding:16px 18px; margin-bottom:24px;
-    font-size:14px; line-height:1.7;
+  :root {
+    --bg:#070b14; --bg2:#0a1220; --card:rgba(255,255,255,0.03); --card-border:rgba(255,255,255,0.08);
+    --txt:#ffffff; --txt-soft:rgba(255,255,255,0.6); --txt-dim:rgba(255,255,255,0.4);
+    --accent:#00d4ff; --accent2:#0072ff; --rule-bg:rgba(255,193,7,0.08); --rule-bd:rgba(255,193,7,0.35);
+    --shadow:0 20px 60px rgba(0,0,0,0.5);
   }
-  .info-banner strong { color:#00d4ff; }
+  [data-theme="light"] {
+    --bg:#f4f6fa; --bg2:#ffffff; --card:#ffffff; --card-border:rgba(0,0,0,0.08);
+    --txt:#0a1220; --txt-soft:rgba(10,18,32,0.65); --txt-dim:rgba(10,18,32,0.45);
+    --accent:#0072ff; --accent2:#00a1ff; --rule-bg:rgba(255,170,0,0.12); --rule-bd:rgba(255,170,0,0.5);
+    --shadow:0 20px 60px rgba(0,0,0,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--txt); transition:background .3s, color .3s; overflow-x:hidden; }
 
-  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
-  .card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:18px; }
-  .card-img { width:100%; height:200px; background:#0a1220; border-radius:12px; overflow:hidden; margin-bottom:14px; display:flex; align-items:center; justify-content:center; }
-  .card-img img { width:100%; height:100%; object-fit:contain; }
-  .card-fallback { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg,#0a1220,#0f1a30); }
-  .card-fallback .badge { font-size:10px; font-weight:800; letter-spacing:2px; color:#00d4ff; padding:4px 12px; border-radius:50px; background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.3); margin-bottom:10px; }
-  .card-fallback .shape { width:60px; height:110px; border:2px solid rgba(0,212,255,0.5); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px; }
-  .card-fallback .name { font-size:13px; font-weight:800; }
-  .card h3 { font-size:16px; font-weight:800; margin-bottom:4px; }
-  .card p { font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:12px; }
-  .dp { background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:10px; text-align:center; margin-bottom:12px; }
-  .dp .lbl { font-size:10px; text-transform:uppercase; color:rgba(255,255,255,0.6); letter-spacing:1px; }
-  .dp .amt { font-size:20px; font-weight:900; color:#00d4ff; }
-  .plan-lbl { font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:6px; font-weight:600; }
+  /* NAV */
+  nav { position:fixed; top:0; width:100%; z-index:1000; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(20px); border-bottom:1px solid var(--card-border); padding:14px 24px; display:flex; justify-content:space-between; align-items:center; }
+  .logo { font-size:22px; font-weight:900; display:flex; align-items:center; gap:10px; }
+  .logo-icon { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-size:16px; color:#fff; }
+  .logo span { color:var(--accent); }
+  .nav-links { display:flex; gap:26px; }
+  .nav-links a { color:var(--txt-soft); text-decoration:none; font-size:14px; font-weight:500; }
+  .nav-links a:hover { color:var(--accent); }
+  .nav-actions { display:flex; gap:8px; align-items:center; }
+  .nav-btn { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; padding:10px 20px; border-radius:50px; font-weight:700; cursor:pointer; font-size:14px; }
+  .icon-btn { background:var(--card); border:1px solid var(--card-border); color:var(--txt); width:38px; height:38px; border-radius:50%; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+
+  /* HERO */
+  .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:130px 24px 60px; position:relative; }
+  .hero::before { content:''; position:absolute; top:-20%; left:50%; transform:translateX(-50%); width:900px; height:900px; border-radius:50%; background:radial-gradient(circle,rgba(0,212,255,0.12),transparent 60%); pointer-events:none; }
+  .hero-content { max-width:900px; text-align:center; position:relative; z-index:1; }
+  .badge { display:inline-block; padding:8px 20px; background:color-mix(in srgb, var(--accent) 10%, transparent); border:1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius:50px; font-size:13px; color:var(--accent); margin-bottom:28px; font-weight:700; }
+  .hero h1 { font-size:clamp(38px,8vw,64px); font-weight:900; line-height:1.05; letter-spacing:-2px; margin-bottom:24px; }
+  .hero h1 span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero p { font-size:clamp(15px,4vw,18px); color:var(--txt-soft); max-width:600px; margin:0 auto 36px; line-height:1.7; }
+  .hero-buttons { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; padding:16px 32px; border-radius:50px; font-weight:700; cursor:pointer; font-size:15px; }
+  .btn-secondary { background:var(--card); color:var(--txt); border:1px solid var(--card-border); padding:16px 32px; border-radius:50px; font-weight:600; cursor:pointer; font-size:15px; }
+
+  /* TRUST BAR */
+  .trust-bar { background:var(--bg2); border-top:1px solid var(--card-border); border-bottom:1px solid var(--card-border); padding:18px 20px; display:flex; justify-content:center; flex-wrap:wrap; gap:24px 40px; }
+  .trust-item { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:var(--txt-soft); }
+  .trust-item .ico { font-size:18px; }
+
+  /* SECTION */
+  .section { padding:80px 24px; max-width:1300px; margin:0 auto; }
+  .section-title { text-align:center; margin-bottom:50px; }
+  .section-title .tag { display:inline-block; padding:6px 16px; border-radius:50px; background:color-mix(in srgb, var(--accent) 10%, transparent); border:1px solid color-mix(in srgb, var(--accent) 30%, transparent); color:var(--accent); font-size:12px; font-weight:700; margin-bottom:14px; }
+  .section-title h2 { font-size:clamp(26px,6vw,42px); font-weight:900; letter-spacing:-1.5px; margin-bottom:12px; }
+  .section-title p { color:var(--txt-soft); font-size:15px; max-width:600px; margin:0 auto; }
+
+  /* HOW IT WORKS */
+  .how-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; max-width:1000px; margin:0 auto; }
+  .how-step { text-align:center; padding:20px; background:var(--card); border:1px solid var(--card-border); border-radius:18px; }
+  .how-num { width:56px; height:56px; margin:0 auto 18px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--accent),var(--accent2)); font-size:22px; font-weight:900; color:#fff; }
+  .how-step h3 { font-size:17px; margin-bottom:8px; font-weight:800; }
+  .how-step p { color:var(--txt-soft); font-size:13px; line-height:1.6; }
+
+  /* PRODUCTS */
+  .phones-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px; }
+  .phone-card { background:var(--card); border:1px solid var(--card-border); border-radius:20px; padding:22px; position:relative; }
+  .badge-flag { position:absolute; top:14px; right:14px; padding:5px 12px; border-radius:50px; font-size:10px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; z-index:2; }
+  .badge-popular { background:linear-gradient(135deg,#ff9500,#ff5e00); color:#fff; }
+  .badge-value { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; }
+  .badge-few { background:linear-gradient(135deg,#ff2d55,#c1003b); color:#fff; }
+  .phone-img-box { width:100%; height:220px; background:var(--bg2); border-radius:14px; overflow:hidden; margin-bottom:16px; display:flex; align-items:center; justify-content:center; position:relative; }
+  .phone-img-box img { width:100%; height:100%; object-fit:contain; }
+  .phone-auto-card { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--bg2),color-mix(in srgb,var(--accent) 8%,var(--bg2))); }
+  .phone-auto-card .brand-badge { font-size:10px; font-weight:800; letter-spacing:2px; color:var(--accent); padding:4px 12px; border-radius:50px; background:color-mix(in srgb,var(--accent) 15%,transparent); border:1px solid color-mix(in srgb,var(--accent) 40%,transparent); margin-bottom:10px; }
+  .phone-auto-card .phone-shape { width:64px; height:120px; border:2px solid color-mix(in srgb,var(--accent) 50%,transparent); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:12px; }
+  .phone-auto-card .phone-name { font-size:14px; font-weight:800; }
+  .phone-header h3 { font-size:17px; font-weight:800; margin-bottom:3px; }
+  .phone-header p { font-size:12px; color:var(--txt-soft); margin-bottom:12px; }
+  .dp-box { background:color-mix(in srgb,var(--accent) 10%,transparent); border:1px solid color-mix(in srgb,var(--accent) 25%,transparent); border-radius:12px; padding:12px; text-align:center; margin-bottom:14px; }
+  .dp-box .label { font-size:10px; color:var(--txt-soft); text-transform:uppercase; letter-spacing:1px; margin-bottom:3px; font-weight:700; }
+  .dp-box .amount { font-size:24px; font-weight:900; color:var(--accent); letter-spacing:-1px; }
+  .plan-label { font-size:12px; color:var(--txt-soft); margin-bottom:8px; font-weight:600; }
   .plan-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-bottom:12px; }
-  .plan-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.75); padding:10px 2px; border-radius:8px; font-size:11px; font-weight:800; cursor:pointer; text-align:center; line-height:1.2; }
-  .plan-tab .mo { font-size:13px; display:block; }
+  .plan-tab { background:color-mix(in srgb,var(--txt) 5%,transparent); border:1px solid var(--card-border); color:var(--txt-soft); padding:9px 3px; border-radius:9px; font-size:11px; font-weight:800; cursor:pointer; text-align:center; line-height:1.2; transition:all .2s; }
+  .plan-tab .mo { font-size:12px; display:block; color:var(--txt); }
   .plan-tab .wk { font-size:9px; opacity:0.7; display:block; margin-top:2px; }
-  .plan-tab.active { background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border-color:transparent; }
-  .plan-tab.disabled { opacity:0.3; cursor:not-allowed; }
-  .selected-box { background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.3); border-radius:10px; padding:12px; margin-bottom:12px; text-align:center; }
-  .selected-box .lbl { font-size:10px; text-transform:uppercase; color:rgba(255,255,255,0.6); letter-spacing:1px; margin-bottom:4px; }
-  .selected-box .val { font-size:18px; font-weight:900; color:#00d4ff; }
-  .selected-box .sub { font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px; margin-bottom:0; }
-  .row { display:flex; justify-content:space-between; font-size:13px; padding:4px 0; }
-  .row .k { color:rgba(255,255,255,0.55); }
-  .row .v { font-weight:700; }
-  .row.total { border-top:1px solid rgba(255,255,255,0.08); margin-top:6px; padding-top:8px; }
-  .row.total .v { color:#00d4ff; font-size:15px; }
-  .order-btn { width:100%; background:linear-gradient(135deg,#00d4ff,#0072ff); color:#fff; border:none; padding:12px; border-radius:10px; font-weight:800; font-size:14px; cursor:pointer; margin-top:10px; }
-  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; padding:20px; overflow-y:auto; }
+  .plan-tab.active { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border-color:transparent; }
+  .plan-tab.active .mo { color:#fff; }
+  .plan-tab.disabled { opacity:0.25; cursor:not-allowed; }
+  .sel-box { background:color-mix(in srgb,var(--accent) 8%,transparent); border:1px solid color-mix(in srgb,var(--accent) 25%,transparent); border-radius:10px; padding:10px; text-align:center; margin-bottom:12px; }
+  .sel-box .lbl { font-size:9px; text-transform:uppercase; color:var(--txt-soft); letter-spacing:1px; margin-bottom:3px; font-weight:700; }
+  .sel-box .val { font-size:16px; font-weight:900; color:var(--accent); }
+  .sel-box .sub { font-size:11px; color:var(--txt-soft); margin-top:2px; }
+  .breakdown { font-size:12.5px; }
+  .breakdown .row { display:flex; justify-content:space-between; padding:3px 0; color:var(--txt-soft); }
+  .breakdown .row .v { font-weight:700; color:var(--txt); }
+  .breakdown .row.total { border-top:1px solid var(--card-border); margin-top:5px; padding-top:8px; }
+  .breakdown .row.total .v { color:var(--accent); font-size:14px; }
+  .rule-box { background:var(--rule-bg); border:1px solid var(--rule-bd); border-radius:10px; padding:11px 13px; margin:12px 0 4px; font-size:12px; line-height:1.6; color:var(--txt); }
+  .rule-box .title { color:#ffb300; font-weight:800; display:block; margin-bottom:3px; font-size:11px; }
+  .order-btn { width:100%; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; padding:12px; border-radius:11px; font-weight:800; font-size:14px; cursor:pointer; margin-top:12px; }
+  .share-row { display:flex; gap:6px; margin-top:8px; }
+  .share-btn { flex:1; padding:9px; border-radius:9px; border:1px solid var(--card-border); background:var(--card); color:var(--txt-soft); font-size:11px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:4px; }
+
+  /* SKELETON */
+  .skeleton { background:var(--card); border:1px solid var(--card-border); border-radius:20px; padding:22px; }
+  .skel-img { height:220px; border-radius:14px; background:linear-gradient(90deg, color-mix(in srgb,var(--txt) 5%,transparent) 25%, color-mix(in srgb,var(--txt) 10%,transparent) 50%, color-mix(in srgb,var(--txt) 5%,transparent) 75%); background-size:200% 100%; animation:skel 1.5s infinite; margin-bottom:16px; }
+  .skel-line { height:14px; border-radius:7px; background:linear-gradient(90deg, color-mix(in srgb,var(--txt) 5%,transparent) 25%, color-mix(in srgb,var(--txt) 10%,transparent) 50%, color-mix(in srgb,var(--txt) 5%,transparent) 75%); background-size:200% 100%; animation:skel 1.5s infinite; margin-bottom:10px; }
+  .skel-line.short { width:60%; }
+  @keyframes skel { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+
+  /* TESTIMONIALS */
+  .test-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+  .test-card { background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:24px; }
+  .stars { color:#ffc107; letter-spacing:2px; margin-bottom:12px; font-size:15px; }
+  .test-card p { color:var(--txt-soft); font-size:14px; line-height:1.7; margin-bottom:16px; font-style:italic; }
+  .test-author { display:flex; align-items:center; gap:12px; }
+  .test-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; font-size:16px; }
+  .test-author .info h5 { font-size:14px; font-weight:800; }
+  .test-author .info span { font-size:12px; color:var(--txt-dim); }
+
+  /* FAQ */
+  .faq-list { max-width:760px; margin:0 auto; }
+  .faq-item { background:var(--card); border:1px solid var(--card-border); border-radius:14px; margin-bottom:12px; overflow:hidden; }
+  .faq-q { padding:18px 20px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:15px; }
+  .faq-q .arrow { color:var(--accent); transition:transform .3s; font-size:18px; }
+  .faq-item.open .faq-q .arrow { transform:rotate(180deg); }
+  .faq-a { max-height:0; overflow:hidden; transition:max-height .3s; }
+  .faq-item.open .faq-a { max-height:400px; }
+  .faq-a div { padding:0 20px 18px; color:var(--txt-soft); font-size:14px; line-height:1.7; }
+
+  /* FOOTER */
+  footer { background:var(--bg2); border-top:1px solid var(--card-border); padding:50px 24px 24px; }
+  .footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; margin-bottom:30px; }
+  .footer-col h4 { font-size:15px; font-weight:800; margin-bottom:14px; }
+  .footer-col p, .footer-col a { color:var(--txt-soft); font-size:13px; line-height:1.9; text-decoration:none; display:block; }
+  .footer-col a:hover { color:var(--accent); }
+  .footer-bottom { text-align:center; color:var(--txt-dim); font-size:12px; border-top:1px solid var(--card-border); padding-top:20px; max-width:1200px; margin:0 auto; }
+
+  /* FLOATING WHATSAPP */
+  .float-wa { position:fixed; bottom:20px; right:20px; width:58px; height:58px; border-radius:50%; background:linear-gradient(135deg,#25D366,#128C7E); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 25px rgba(37,211,102,0.5); cursor:pointer; z-index:900; border:none; animation:wapulse 2.5s infinite; }
+  .float-wa svg { width:30px; height:30px; fill:#fff; }
+  .float-tg { position:fixed; bottom:88px; right:20px; width:58px; height:58px; border-radius:50%; background:linear-gradient(135deg,#0088cc,#006699); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 25px rgba(0,136,204,0.5); cursor:pointer; z-index:900; border:none; font-size:26px; }
+  @keyframes wapulse { 0%,100%{box-shadow:0 8px 25px rgba(37,211,102,0.5);} 50%{box-shadow:0 8px 35px rgba(37,211,102,0.9);} }
+
+  /* MODAL */
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; padding:20px; overflow-y:auto; }
   .overlay.show { display:flex; }
-  .modal { background:#0d1220; border:1px solid rgba(0,212,255,0.25); border-radius:20px; padding:25px 20px; max-width:480px; width:100%; max-height:92vh; overflow-y:auto; position:relative; }
-  .close-x { position:absolute; top:15px; right:15px; background:rgba(255,255,255,0.06); border:none; color:#fff; width:34px; height:34px; border-radius:50%; font-size:18px; cursor:pointer; }
-  .modal h2 { font-size:20px; margin-bottom:6px; }
-  .modal .st { color:rgba(255,255,255,0.5); font-size:13px; margin-bottom:18px; }
-  .big-badge { background:linear-gradient(135deg,#00d4ff,#0072ff); border-radius:14px; padding:16px; text-align:center; margin-bottom:16px; }
-  .big-badge .lbl { font-size:11px; text-transform:uppercase; letter-spacing:2px; opacity:0.9; margin-bottom:4px; }
+  .modal { background:var(--bg2); border:1px solid color-mix(in srgb,var(--accent) 30%,transparent); border-radius:22px; padding:28px 22px; max-width:480px; width:100%; max-height:92vh; overflow-y:auto; position:relative; }
+  .close-x { position:absolute; top:15px; right:15px; background:var(--card); border:none; color:var(--txt); width:34px; height:34px; border-radius:50%; font-size:16px; cursor:pointer; }
+  .modal h2 { font-size:20px; margin-bottom:6px; font-weight:800; }
+  .modal .st { color:var(--txt-soft); font-size:13px; margin-bottom:16px; }
+  .big-badge { background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:14px; padding:16px; text-align:center; margin-bottom:16px; color:#fff; }
+  .big-badge .lbl { font-size:10px; text-transform:uppercase; letter-spacing:2px; opacity:0.95; margin-bottom:4px; font-weight:700; }
   .big-badge .val { font-size:26px; font-weight:900; }
-  .big-badge .sub { font-size:13px; opacity:0.95; margin-top:4px; margin-bottom:0; color:#fff; }
-  .modal input, .modal textarea { width:100%; padding:12px 14px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#fff; font-size:14px; outline:none; margin-bottom:10px; font-family:'Inter',sans-serif; }
-  .wa-btn { width:100%; background:linear-gradient(135deg,#25D366,#128C7E); color:#fff; border:none; padding:16px; border-radius:12px; font-weight:800; font-size:16px; cursor:pointer; margin-top:6px; }
-  .cancel-btn { width:100%; background:rgba(255,255,255,0.06); color:#fff; border:1px solid rgba(255,255,255,0.15); padding:12px; border-radius:12px; font-weight:700; cursor:pointer; font-size:14px; margin-top:8px; }
+  .big-badge .sub { font-size:12px; opacity:0.95; margin-top:4px; }
+  .modal input, .modal textarea { width:100%; padding:12px 14px; background:var(--card); border:1px solid var(--card-border); border-radius:10px; color:var(--txt); font-size:14px; outline:none; margin-bottom:10px; font-family:'Inter',sans-serif; }
+  .modal input:focus, .modal textarea:focus { border-color:var(--accent); }
+  .wa-btn { width:100%; background:linear-gradient(135deg,#25D366,#128C7E); color:#fff; border:none; padding:16px; border-radius:12px; font-weight:800; font-size:15px; cursor:pointer; margin-top:6px; }
+  .cancel-btn { width:100%; background:var(--card); color:var(--txt); border:1px solid var(--card-border); padding:12px; border-radius:12px; font-weight:700; font-size:14px; margin-top:8px; cursor:pointer; }
+
+  /* CONFIRMATION */
+  .confirm-icon { width:80px; height:80px; margin:0 auto 20px; border-radius:50%; background:linear-gradient(135deg,#25D366,#128C7E); display:flex; align-items:center; justify-content:center; font-size:44px; animation:pop .5s ease; }
+  @keyframes pop { 0%{transform:scale(0);} 70%{transform:scale(1.15);} 100%{transform:scale(1);} }
+  .confirm-title { text-align:center; font-size:22px; font-weight:900; margin-bottom:8px; }
+  .confirm-sub { text-align:center; color:var(--txt-soft); font-size:14px; margin-bottom:20px; line-height:1.6; }
+
+  @media (max-width:900px) {
+    .nav-links { display:none; }
+    .hero { padding:110px 20px 50px; }
+    .section { padding:60px 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
 
-
-<div class="lang-screen" id="langScreen">
-  <h1>Easy <span>Buy</span></h1>
-  <p class="sub">Choose your language</p>
-  <p class="sub-ha">Zaɓi harshen da kake so</p>
-  <div class="lang-btns">
-    <button class="lang-btn" onclick="setLang('en')"><span class="flag">🇬🇧</span>English</button>
-    <button class="lang-btn" onclick="setLang('ha')"><span class="flag">🇳🇬</span>Hausa</button>
+<nav>
+  <div class="logo"><div class="logo-icon">🛍️</div>Easy<span>Buy</span></div>
+  <div class="nav-links">
+    <a href="#phones" id="navPhones">Phones</a>
+    <a href="#how" id="navHow">How It Works</a>
+    <a href="#faq" id="navFaq">FAQ</a>
+    <a href="#contact" id="navContact">Contact</a>
   </div>
+  <div class="nav-actions">
+    <button class="icon-btn" id="langBtn" onclick="toggleLang()" title="Language">EN</button>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Theme">🌙</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge" id="heroBadge">🛍️ Nigeria's Trusted Phone Store</div>
+    <h1 id="heroTitle">Own a Phone Today, <span>Pay Small Small</span></h1>
+    <p id="heroText">Pick your phone. Pay a small down payment. Then pay weekly at your own pace — 3, 4, 6 or 9 months. No stress, no hidden fees.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="document.getElementById('phones').scrollIntoView()" id="heroBtn1">📱 Browse Phones</button>
+      <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView()" id="heroBtn2">How It Works</button>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><span class="ico">✅</span><span data-i18n="trustGen">Genuine Phones</span></div>
+  <div class="trust-item"><span class="ico">🚚</span><span data-i18n="trustDel">Fast Delivery</span></div>
+  <div class="trust-item"><span class="ico">💳</span><span data-i18n="trustPay">Flexible Payments</span></div>
+  <div class="trust-item"><span class="ico">💬</span><span data-i18n="trustWA">WhatsApp Support</span></div>
+  <div class="trust-item"><span class="ico">📍</span><span data-i18n="trustLoc">Physical Shop in Maiduguri</span></div>
 </div>
 
-<div class="site" id="site">
-  <button class="lang-toggle" onclick="showLangScreen()"><span id="langToggleText">HA</span></button>
-  <h1 class="site-title">Easy <span>Buy</span></h1>
-  <p class="sub" id="siteSub">Pick a phone. Pay small small.</p>
+<section class="section" id="how">
+  <div class="section-title">
+    <div class="tag" id="howTag">How It Works</div>
+    <h2 id="howTitle">Get Your Phone in 3 Simple Steps</h2>
+    <p id="howSub">Simple, transparent, and easy — designed for everyday Nigerians</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="how-num">1</div>
+      <h3 id="how1t">Pick Your Phone</h3>
+      <p id="how1p">Choose from Itel, Infinix, TECNO. See the exact weekly price before you commit.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">2</div>
+      <h3 id="how2t">Pay Down Payment</h3>
+      <p id="how2p">Pay the down payment shown for your chosen phone. Then take the phone home.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">3</div>
+      <h3 id="how3t">Pay Every 8 Days</h3>
+      <p id="how3p">Same day each week. Choose 3, 4, 6 or 9 months — whatever fits your budget.</p>
+    </div>
+  </div>
+</section>
 
-  <div class="info-banner" id="infoBanner"></div>
+<section class="section" id="phones">
+  <div class="section-title">
+    <div class="tag" id="phonesTag">Our Phones</div>
+    <h2 id="phonesTitle">Available Phones & Plans</h2>
+    <p id="phonesSub">All prices in Naira. Down payment is paid once. Weekly payment is paid every 8 days until you finish.</p>
+  </div>
+  <div class="phones-grid" id="phonesGrid"></div>
+</section>
 
-  <div class="grid" id="grid"></div>
-</div>
+<section class="section">
+  <div class="section-title">
+    <div class="tag" id="testTag">Testimonials</div>
+    <h2 id="testTitle">What Our Customers Say</h2>
+    <p id="testSub">Real feedback from customers across Borno, Yobe and Adamawa</p>
+  </div>
+  <div class="test-grid" id="testGrid"></div>
+</section>
 
+<section class="section" id="faq">
+  <div class="section-title">
+    <div class="tag" id="faqTag">FAQ</div>
+    <h2 id="faqTitle">Frequently Asked Questions</h2>
+    <p id="faqSub">Everything you need to know before you order</p>
+  </div>
+  <div class="faq-list" id="faqList"></div>
+</section>
+
+<section class="section" id="contact">
+  <div class="section-title">
+    <div class="tag" id="contTag">Contact Us</div>
+    <h2 id="contTitle">Talk To Us</h2>
+    <p id="contSub">We reply on WhatsApp within 30 minutes during business hours</p>
+  </div>
+  <div style="max-width:500px;margin:0 auto;display:flex;flex-direction:column;gap:12px;">
+    <button class="wa-btn" onclick="openWhatsApp()" style="font-size:16px;padding:18px;">💬 Chat on WhatsApp</button>
+    <button class="wa-btn" onclick="openTelegram()" style="font-size:16px;padding:18px;background:linear-gradient(135deg,#0088cc,#006699);">✈️ Chat on Telegram</button>
+    <a href="mailto:easybuy.abk.regit.trusted@gmail.com" style="text-decoration:none;"><button class="cancel-btn" style="width:100%;padding:16px;font-size:15px;">📧 Send an Email</button></a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Easy Buy</h4>
+      <p id="footAbout">Your trusted phone store in Maiduguri, serving Borno, Yobe and Adamawa. Genuine phones, flexible payment plans, and real customer support.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="https://wa.me/2349123915098" target="_blank">💬 WhatsApp: +234 912 391 5098</a>
+      <a href="https://t.me/Abba3122" target="_blank">✈️ Telegram: @Abba3122</a>
+      <a href="mailto:easybuy.abk.regit.trusted@gmail.com">📧 easybuy.abk.regit.trusted@gmail.com</a>
+      <a href="#">📍 Maiduguri, Borno State</a>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footAreas">Delivery Areas</h4>
+      <p>Borno • Yobe • Adamawa</p>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <p>Mon–Sat: 9am – 6pm<br>Sun: Closed</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Easy Buy. All rights reserved.</div>
+</footer>
+
+<button class="float-tg" onclick="openTelegram()" title="Chat on Telegram">✈️</button>
+<button class="float-wa" onclick="openWhatsApp()" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.8-1.9-.9-.3-.1-.5-.2-.7.2-.2.3-.8.9-1 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.8-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.6-1.5-.9-2.1-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.6 1 2.7c.1.2 1.7 2.6 4.1 3.6 1.5.6 2.1.7 2.8.6.4-.1 1.3-.5 1.5-1.1.2-.5.2-1 .1-1.1-.1-.1-.3-.2-.5-.3zM12 22c-1.8 0-3.5-.5-5-1.4L2 22l1.4-4.9C2.5 15.6 2 13.9 2 12 2 6.5 6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/></svg>
+</button>
+
+<!-- ORDER MODAL -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <button class="close-x" onclick="closeModal()">✕</button>
-    <h2 id="modalTitle">Place Your Order</h2>
-    <p class="st" id="modalSub">Fill in your details</p>
+    <h2 id="mTitle">Place Your Order</h2>
+    <p class="st" id="mSub">Fill in your details and send via WhatsApp</p>
     <div class="big-badge" id="planBadge"></div>
     <div id="summary"></div>
+    <div class="rule-box" id="mRule"></div>
     <input type="text" id="cName" placeholder="Full Name">
     <input type="tel" id="cPhone" placeholder="Phone Number">
     <input type="text" id="cAddress" placeholder="Address">
     <textarea id="cNotes" placeholder="Any notes? (optional)" rows="2"></textarea>
-    <button class="wa-btn" onclick="sendWhatsApp()" id="waBtn">Send Order via WhatsApp</button>
+    <button class="wa-btn" onclick="sendWhatsApp()" id="waBtn">📱 Send Order via WhatsApp</button>
     <button class="cancel-btn" onclick="closeModal()" id="cancelBtn">Cancel</button>
   </div>
 </div>
 
+<!-- CONFIRMATION -->
+<div class="overlay" id="confirmOverlay">
+  <div class="modal">
+    <div class="confirm-icon">✅</div>
+    <div class="confirm-title" id="cfTitle">Order Sent!</div>
+    <div class="confirm-sub" id="cfSub">We received your order. We'll reply within 30 minutes.</div>
+    <div id="cfSummary" style="background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:16px;font-size:13.5px;margin-bottom:16px;"></div>
+    <button class="wa-btn" onclick="closeConfirm()" id="cfBtn">Got it</button>
+  </div>
+</div>
+
 <script>
-const WHATSAPP_NUMBER = "2349123915098";
+const WA_NUMBER = "2349123915098";
+const WA_GREETING = "Hello Easy Buy, I need help choosing a phone.";
 
 const PLAN_INFO = {
   13: { en:{months:"3 Months", payments:"13 payments"}, ha:{months:"Watanni 3", payments:"Biya sau 13"} },
@@ -125,162 +355,276 @@ const PLAN_INFO = {
   39: { en:{months:"9 Months", payments:"39 payments"}, ha:{months:"Watanni 9", payments:"Biya sau 39"} }
 };
 
+const RULE = {
+  en: { title:"Payment Rule:", body:"Pay <strong>every 8 days</strong> — same day each week. If you take the phone on Monday, next payment is due <strong>Monday</strong>. If not paid by <strong>midnight</strong>, the phone will be <strong>locked the next morning</strong>." },
+  ha: { title:"Ka'idar Biya:", body:"Biya <strong>duk bayan kwana 8</strong> — wannan rana kowace mako. Idan ka ɗauki waya ranar Litinin, biya na gaba ranar <strong>Litinin</strong>. Idan ba a biya ba kafin <strong>tsakar dare</strong>, za a <strong>kulle waya da safiyar gobe</strong>." }
+};
+
 const T = {
   en: {
-    tagline: "Pick a phone. Pay small small.",
-    downPayment: "Down Payment",
-    choosePlan: "Choose your payment plan:",
-    youSelected: "You selected",
-    orderBtn: "Order This Phone",
-    modalTitle: "Place Your Order",
-    modalSub: "Fill in your details and send via WhatsApp",
-    changePlan: "Change plan:",
-    weekly: "Weekly payment",
-    totalOutstanding: "Total Outstanding",
-    totalCost: "Total Cost",
-    name: "Full Name",
-    phone: "Phone Number",
-    address: "Address",
-    notes: "Any notes? (optional)",
-    send: "Send Order via WhatsApp",
-    cancel: "Cancel",
-    switchLang: "HA",
-    info: "💡 <strong>How payment works:</strong> You pay <strong>every 8 days</strong> (the same day each week). If you take the phone today, your next payment is due in <strong>7 days</strong>. Longer plans mean lower weekly payments but a higher total.",
-    confirmMsg: "Please fill in Name, Phone, and Address"
+    heroBadge:"🛍️ Nigeria's Trusted Phone Store",
+    heroTitle:"Own a Phone Today, <span>Pay Small Small</span>",
+    heroText:"Pick your phone. Pay a small down payment. Then pay weekly at your own pace — 3, 4, 6 or 9 months. No stress, no hidden fees.",
+    heroBtn1:"📱 Browse Phones", heroBtn2:"How It Works",
+    trustGen:"Genuine Phones", trustDel:"Fast Delivery", trustPay:"Flexible Payments", trustWA:"WhatsApp Support", trustLoc:"Physical Shop in Maiduguri",
+    howTag:"How It Works", howTitle:"Get Your Phone in 3 Simple Steps", howSub:"Simple, transparent, and easy — designed for everyday Nigerians",
+    how1t:"Pick Your Phone", how1p:"Choose from Itel, Infinix, TECNO. See the exact weekly price before you commit.",
+    how2t:"Pay Down Payment", how2p:"Pay the down payment shown for your chosen phone. Then take the phone home.",
+    how3t:"Pay Every 8 Days", how3p:"Same day each week. Choose 3, 4, 6 or 9 months — whatever fits your budget.",
+    phonesTag:"Our Phones", phonesTitle:"Available Phones & Plans", phonesSub:"All prices in Naira. Down payment paid once. Weekly payment every 8 days.",
+    downPayment:"Down Payment", choosePlan:"Choose your payment plan:", youSelected:"You selected",
+    weekly:"Weekly payment", totalOutstanding:"Total Outstanding", totalCost:"Total Cost",
+    orderBtn:"Order This Phone", share:"Share",
+    testTag:"Testimonials", testTitle:"What Our Customers Say", testSub:"Real feedback from customers across Borno, Yobe and Adamawa",
+    faqTag:"FAQ", faqTitle:"Frequently Asked Questions", faqSub:"Everything you need to know before you order",
+    contTag:"Contact Us", contTitle:"Talk To Us", contSub:"We reply on WhatsApp within 30 minutes during business hours",
+    mTitle:"Place Your Order", mSub:"Fill in your details and send via WhatsApp",
+    changePlan:"Change plan:", name:"Full Name", phone:"Phone Number", address:"Address", notes:"Any notes? (optional)",
+    waBtn:"📱 Send Order via WhatsApp", cancel:"Cancel",
+    cfTitle:"Order Sent!", cfSub:"We received your order. We'll reply within 30 minutes.",
+    cfBtn:"Got it",
+    errFill:"Please fill in Name, Phone, and Address",
+    footAbout:"Your trusted phone store in Maiduguri, serving Borno, Yobe and Adamawa. Genuine phones, flexible payment plans, and real customer support.",
+    footAreas:"Delivery Areas",
+    mostPopular:"Most Popular", bestValue:"Best Value", onlyFew:"Only a Few Left"
   },
   ha: {
-    tagline: "Zaɓi waya. Biya kaɗan-kaɗan.",
-    downPayment: "Kuɗin Farko",
-    choosePlan: "Zaɓi shirin biyan ku:",
-    youSelected: "Ka zaɓa",
-    orderBtn: "Yi Oda Wannan Wayar",
-    modalTitle: "Yi Odarka",
-    modalSub: "Cika bayaninka sannan ka aika ta WhatsApp",
-    changePlan: "Canza shiri:",
-    weekly: "Biyan mako",
-    totalOutstanding: "Jimlar da ya Rage",
-    totalCost: "Jimlar Kuɗi",
-    name: "Cikakken Suna",
-    phone: "Lambar Waya",
-    address: "Adireshi",
-    notes: "Wani bayani? (na zaɓi)",
-    send: "Aika Oda ta WhatsApp",
-    cancel: "Sokewa",
-    switchLang: "EN",
-    info: "💡 <strong>Yadda biya yake aiki:</strong> Kuna biya <strong>duk bayan kwana 8</strong> (wannan rana kowace mako). Idan ka ɗauki wayar yau, biya na gaba zai kasance cikin <strong>kwana 8</strong>. Dogon shiri yana nufin ƙaramin biyan mako amma jimlar kuɗi ya fi.",
-    confirmMsg: "Da fatan za a cika Suna, Lambar Waya, da Adireshi"
+    heroBadge:"🛍️ Shagon Waya Amintacce a Najeriya",
+    heroTitle:"Sami Waya Yau, <span>Biya Kaɗan-Kaɗan</span>",
+    heroText:"Zaɓi wayarka. Biya ɗan kuɗi na farko. Sannan ka riƙa biya duk bayan kwana 8 — watanni 3, 4, 6 ko 9. Babu damuwa, babu ɓoyayyen kuɗi.",
+    heroBtn1:"📱 Duba Wayoyi", heroBtn2:"Yadda Yake Aiki",
+    trustGen:"Wayoyi Na Gaskiya", trustDel:"Bayarwa Cikin Sauri", trustPay:"Biya Mai Sauƙi", trustWA:"Taimako ta WhatsApp", trustLoc:"Shago a Maiduguri",
+    howTag:"Yadda Yake Aiki", howTitle:"Samu Wayarka Cikin Matakai 3", howSub:"Sauƙi, bayyananne, kuma mai sauƙin fahimta",
+    how1t:"Zaɓi Wayarka", how1p:"Zaɓi daga Itel, Infinix, TECNO. Ka ga ainihin kuɗin mako kafin ka yanke shawara.",
+    how2t:"Biya Kuɗin Farko", how2p:"Biya kuɗin farko da aka nuna. Sannan ka ɗauki wayar gida.",
+    how3t:"Biya Duk Bayan Kwana 8", how3p:"Wannan rana kowace mako. Zaɓi watanni 3, 4, 6 ko 9.",
+    phonesTag:"Wayoyinmu", phonesTitle:"Wayoyi da Shirye-shiryen Biya", phonesSub:"Duk farashi cikin Naira. Kuɗin farko sau ɗaya. Biyan mako duk bayan kwana 8.",
+    downPayment:"Kuɗin Farko", choosePlan:"Zaɓi shirin biyan ku:", youSelected:"Ka zaɓa",
+    weekly:"Biyan mako", totalOutstanding:"Jimlar da ya Rage", totalCost:"Jimlar Kuɗi",
+    orderBtn:"Yi Oda Wannan Wayar", share:"Raba",
+    testTag:"Shaidu", testTitle:"Abin da Abokan Cinikinmu Suka Ce", testSub:"Gaskiya daga abokan ciniki a Borno, Yobe da Adamawa",
+    faqTag:"Tambayoyi", faqTitle:"Tambayoyin da Aka Yawaita Yi", faqSub:"Duk abin da kake buƙatar sani kafin yin oda",
+    contTag:"Tuntuɓe Mu", contTitle:"Yi Magana da Mu", contSub:"Muna amsa a WhatsApp cikin minti 30",
+    mTitle:"Yi Odarka", mSub:"Cika bayaninka sannan ka aika ta WhatsApp",
+    changePlan:"Canza shiri:", name:"Cikakken Suna", phone:"Lambar Waya", address:"Adireshi", notes:"Wani bayani? (na zaɓi)",
+    waBtn:"📱 Aika Oda ta WhatsApp", cancel:"Sokewa",
+    cfTitle:"An Aika Oda!", cfSub:"Mun karɓi odarka. Za mu amsa cikin minti 30.",
+    cfBtn:"Na Gane",
+    errFill:"Da fatan za a cika Suna, Lambar Waya, da Adireshi",
+    footAbout:"Shagon waya amintacce a Maiduguri, muna bayarwa a Borno, Yobe da Adamawa. Wayoyi na gaskiya, biya mai sauƙi, da taimako na gaskiya.",
+    footAreas:"Yankunan Bayarwa",
+    mostPopular:"Mafi Shahara", bestValue:"Mafi Arha", onlyFew:"Kaɗan Suka Rage"
   }
 };
 
 let LANG = "en";
+let THEME = "dark";
+let currentOrder = null;
 
 const phones = [
-  { id:1, name:"Itel A100cs", model:"A6611L 64/2 GB Vintage Green", brand:"Itel", dp:33240, w13:9374, w17:7669, w26:null, w39:null, image:"/images/itel-a100cs.png" },
-  { id:2, name:"Itel A300+", model:"A681L 64/4 GB Black", brand:"Itel", dp:44070, w13:12428, w17:10168, w26:7626, w39:5885, image:"/images/itel-a300-plus.png" },
-  { id:3, name:"Itel A300+", model:"A681L 128/4 GB Black", brand:"Itel", dp:52800, w13:14890, w17:12182, w26:9136, w39:7051, image:"/images/itel-a300-plus.png" },
-  { id:4, name:"Itel A100CS", model:"A6611L 32/2 GB Red", brand:"Itel", dp:29970, w13:8452, w17:6915, w26:5186, w39:4002, image:"/images/itel-a100cs.png" },
-  { id:5, name:"Itel CITY 200s", model:"C681LN 128/4 GB Gray", brand:"Itel", dp:55500, w13:15651, w17:12805, w26:9603, w39:7411, image:"" },
-  { id:6, name:"Infinix HOT 70", model:"X6895 128/4 GB Grey", brand:"Infinix", dp:67470, w13:19027, w17:15567, w26:11675, w39:9010, image:"" },
-  { id:7, name:"Infinix HOT 70", model:"X6895B 256/6 GB Grey", brand:"Infinix", dp:89970, w13:25373, w17:20759, w26:15568, w39:12014, image:"" },
-  { id:8, name:"TECNO Spark 50", model:"128/4 GB Grey", brand:"TECNO", dp:64380, w13:18156, w17:14854, w26:11140, w39:8597, image:"/images/tecno-spark-50.png" },
-  { id:9, name:"TECNO Spark 50 Pro", model:"KO5 128/6 GB Black", brand:"TECNO", dp:100440, w13:28325, w17:23174, w26:17379, w39:13413, image:"/images/tecno-spark-50-pro.png" },
-  { id:10, name:"TECNO POP 10 Pro", model:"KM4k 128/4 GB Nebula Violet", brand:"TECNO", dp:43344, w13:12224, w17:10001, w26:7500, w39:5788, image:"/images/tecno-pop-10-pro.png" },
-  { id:11, name:"TECNO Pop 20", model:"Kn3 64/4 GB Grey", brand:"TECNO", dp:43088, w13:10708, w17:8031, w26:6198, w39:null, image:"/images/tecno-pop-20.png" }
+  { id:1, name:"Itel A100cs", model:"A6611L 64/2 GB Vintage Green", brand:"Itel", dp:33240, w13:9374, w17:7669, w26:null, w39:null, image:"/images/itel-a100cs.png", badge:null },
+  { id:2, name:"Itel A300+", model:"A681L 64/4 GB Black", brand:"Itel", dp:44070, w13:12428, w17:10168, w26:7626, w39:5885, image:"/images/itel-a300-plus.png", badge:null },
+  { id:3, name:"Itel A300+", model:"A681L 128/4 GB Black", brand:"Itel", dp:52800, w13:14890, w17:12182, w26:9136, w39:7051, image:"/images/itel-a300-plus.png", badge:null },
+  { id:4, name:"Itel A100CS", model:"A6611L 32/2 GB Red", brand:"Itel", dp:29970, w13:8452, w17:6915, w26:5186, w39:4002, image:"/images/itel-a100cs.png", badge:null },
+  { id:5, name:"Itel CITY 200s", model:"C681LN 128/4 GB Gray", brand:"Itel", dp:55500, w13:15651, w17:12805, w26:9603, w39:7411, image:"https://i.ibb.co/N6Y05Y25/Screenshot-2026-10-10-12-28-59-021-com-android-chrome-2.jpg", badge:null },
+  { id:6, name:"Infinix HOT 70", model:"X6895 128/4 GB Grey", brand:"Infinix", dp:67470, w13:19027, w17:15567, w26:11675, w39:9010, image:"https://www.3chub.com/cdn/shop/files/HOT70NIGHTPULSE.png?v=1781171980&width=950", badge:null },
+  { id:7, name:"Infinix HOT 70", model:"X6895B 256/6 GB Grey", brand:"Infinix", dp:89970, w13:25373, w17:20759, w26:15568, w39:12014, image:"https://www.3chub.com/cdn/shop/files/HOT70NIGHTPULSE.png?v=1781171980&width=950", badge:"few" },
+  { id:8, name:"TECNO Spark 50", model:"128/4 GB Grey", brand:"TECNO", dp:64380, w13:18156, w17:14854, w26:11140, w39:8597, image:"/images/tecno-spark-50.png", badge:"popular" },
+  { id:9, name:"TECNO Spark 50 Pro", model:"KO5 128/6 GB Black", brand:"TECNO", dp:100440, w13:28325, w17:23174, w26:17379, w39:13413, image:"/images/tecno-spark-50-pro.png", badge:null },
+  { id:10, name:"TECNO POP 10 Pro", model:"KM4k 128/4 GB Nebula Violet", brand:"TECNO", dp:43344, w13:12224, w17:10001, w26:7500, w39:5788, image:"/images/tecno-pop-10-pro.png", badge:null },
+  { id:11, name:"TECNO Pop 20", model:"Kn3 64/4 GB Grey", brand:"TECNO", dp:43088, w13:10708, w17:8031, w26:6198, w39:null, image:"/images/tecno-pop-20.png", badge:"value" },
+  { id:12, name:"Samsung A06", model:"4/64 GB", brand:"Samsung", dp:35000, w13:null, w17:10599, w26:7825, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a065fzkdafb/gallery/africa-en-galaxy-a06-sm-a065-sm-a065fzkdafb-543416204?%241164_776_PNG%24=", badge:null },
+  { id:13, name:"Samsung A06", model:"4/128 GB", brand:"Samsung", dp:37000, w13:null, w17:12236, w26:9034, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a065fzkdafb/gallery/africa-en-galaxy-a06-sm-a065-sm-a065fzkdafb-543416204?%241164_776_PNG%24=", badge:null },
+  { id:14, name:"Samsung A07", model:"4/64 GB", brand:"Samsung", dp:39000, w13:null, w17:14390, w26:10625, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a077fzkdafb/gallery/africa-en-galaxy-a07s-sm-a077-sm-a077fzkdafb-554500310?%241164_776_PNG%24=", badge:null },
+  { id:15, name:"Samsung A07", model:"4/128 GB", brand:"Samsung", dp:45000, w13:null, w17:15769, w26:11643, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a077fzkdafb/gallery/africa-en-galaxy-a07s-sm-a077-sm-a077fzkdafb-554500310?%241164_776_PNG%24=", badge:null },
+  { id:16, name:"Samsung A07s", model:"4/64 GB", brand:"Samsung", dp:42000, w13:null, w17:14993, w26:11070, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a077fzkdafb/gallery/africa-en-galaxy-a07s-sm-a077-sm-a077fzkdafb-554500310?%241164_776_PNG%24=", badge:null },
+  { id:17, name:"Samsung A07s", model:"4/128 GB", brand:"Samsung", dp:49000, w13:null, w17:18699, w26:13806, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a077fzkdafb/gallery/africa-en-galaxy-a07s-sm-a077-sm-a077fzkdafb-554500310?%241164_776_PNG%24=", badge:null },
+  { id:18, name:"Samsung A08", model:"4/64 GB", brand:"Samsung", dp:45000, w13:null, w17:16889, w26:12470, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a077fzkdafb/gallery/africa-en-galaxy-a07s-sm-a077-sm-a077fzkdafb-554500310?%241164_776_PNG%24=", badge:null },
+  { id:19, name:"Samsung A08", model:"4/128 GB", brand:"Samsung", dp:55000, w13:null, w17:20336, w26:15014, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a077fzkdafb/gallery/africa-en-galaxy-a07s-sm-a077-sm-a077fzkdafb-554500310?%241164_776_PNG%24=", badge:null },
+  { id:20, name:"Samsung A16", model:"4/128 GB", brand:"Samsung", dp:59000, w13:null, w17:15597, w26:11515, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a165fzkgafb/gallery/africa-en-galaxy-a16-sm-a165-sm-a165fzkgafb-544252038?%241164_776_PNG%24=", badge:null },
+  { id:21, name:"Samsung A17", model:"4/128 GB", brand:"Samsung", dp:65000, w13:null, w17:19388, w26:14315, w39:null, image:"https://images.samsung.com/is/image/samsung/p6pim/africa_en/sm-a175flbnafb/gallery/africa-en-galaxy-a17-sm-a175-sm-a175flbnafb-549053920?%241164_776_PNG%24=", badge:null },
+  { id:22, name:"Samsung A17 5G", model:"4/128 GB", brand:"Samsung", dp:75000, w13:null, w17:23352, w26:17241, w39:null, image:"https://www.mobile.com.bd/uploads/products/69ef139898b54_1777275800.webp", badge:null },
+  { id:23, name:"Infinix Smart 20", model:"X6840 128/4 GB Change Gold", brand:"Infinix", dp:53970, w13:15220, w17:12452, w26:9338, w39:7207, image:"https://i.ibb.co/bRbCv64w/Screenshot-2026-10-10-12-32-23-902-com-google-android-googlequicksearchbox-2.jpg", badge:null },
+  { id:24, name:"Infinix Smart 20", model:"X6840 64/4 GB Change Gold", brand:"Infinix", dp:47940, w13:13519, w17:11061, w26:8295, w39:6402, image:"https://i.ibb.co/bRbCv64w/Screenshot-2026-10-10-12-32-23-902-com-google-android-googlequicksearchbox-2.jpg", badge:null }
 ];
 
-function formatNaira(n) { return '₦' + n.toLocaleString('en-NG'); }
-function t(key) { return T[LANG][key]; }
-function planInfo(weeks) { return PLAN_INFO[weeks][LANG]; }
+const testimonials = {
+  en: [
+    { n:"Musa A.", l:"Maiduguri", t:"Bought the TECNO Spark 50 on 6 months. Easy payment, no stress. The WhatsApp service is fast." },
+    { n:"Aisha B.", l:"Damaturu", t:"The phone was exactly as described. Genuine and sealed. I recommend Easy Buy to my friends." },
+    { n:"Ibrahim K.", l:"Yola", t:"Very smooth process. Paid down payment, got my Infinix Hot 70 the same day. Honest business." }
+  ],
+  ha: [
+    { n:"Musa A.", l:"Maiduguri", t:"Na sayi TECNO Spark 50 a watanni 6. Biya mai sauƙi, babu damuwa. Sabis na WhatsApp yana da sauri." },
+    { n:"Aisha B.", l:"Damaturu", t:"Wayar daidai kamar yadda aka kwatanta. Na gaskiya kuma a rufe. Ina ba da shawara ga abokaina." },
+    { n:"Ibrahim K.", l:"Yola", t:"Tsari mai sauƙi. Na biya kuɗin farko, na sami Infinix Hot 70 ranar. Kasuwanci na gaskiya." }
+  ]
+};
 
-function setLang(lang) {
+const faqs = {
+  en: [
+    { q:"How does the payment work?", a:"You pay a down payment first. Then you pay every 8 days (the same day each week) until the plan finishes. Choose 3, 4, 6 or 9 months — longer plans have smaller weekly payments." },
+    { q:"What if I miss a payment?", a:"If payment is not received by midnight on the due date, the phone is locked the next morning. Pay the outstanding amount and we unlock it immediately." },
+    { q:"Can I pay early?", a:"Yes. You can pay more than the weekly amount to finish faster. Just message us on WhatsApp." },
+    { q:"Are the phones genuine?", a:"100% genuine. Every phone is sealed and comes with a valid warranty. We do not sell refurbished or fake phones." },
+    { q:"Which states do you deliver to?", a:"We currently serve three states: Borno, Yobe and Adamawa. Delivery fees depend on your exact location." },
+    { q:"What if the phone has a problem?", a:"All phones come with warranty. If you have any issue, message us on WhatsApp and we will resolve it." }
+  ],
+  ha: [
+    { q:"Yaya biya yake aiki?", a:"Za ka biya kuɗin farko. Sannan ka riƙa biya duk bayan kwana 8 (wannan rana kowace mako) har shirin ya ƙare. Zaɓi watanni 3, 4, 6 ko 9 — dogon shiri yana da ƙaramin biyan mako." },
+    { q:"Idan na rasa biya fa?", a:"Idan ba a biya ba kafin tsakar dare ranar biya, za a kulle wayar da safiyar gobe. Biya kuɗin da ya rage sannan za mu buɗe nan take." },
+    { q:"Zan iya biya da wuri?", a:"Ee. Za ka iya biya fiye da kuɗin mako don kammalawa da sauri. Sai ka aiko mana da sako a WhatsApp." },
+    { q:"Wayoyin na gaskiya ne?", a:"100% na gaskiya. Kowane waya a rufe take kuma tana da garantin da ya dace. Ba ma sayar da wayoyi tsofaffi ko na jabu." },
+    { q:"Wace jihohi kuke bayarwa?", a:"Muna bayarwa a jihohi uku: Borno, Yobe da Adamawa. Kuɗin bayarwa ya dogara da wurin da kake." },
+    { q:"Idan wayar ta sami matsala fa?", a:"Duk wayoyi suna da garanti. Idan ka sami matsala, aiko mana da sako a WhatsApp kuma za mu warware." }
+  ]
+};
+
+function t(k){ return T[LANG][k]; }
+function planInfo(w){ return PLAN_INFO[w][LANG]; }
+function fmt(n){ return '₦' + n.toLocaleString('en-NG'); }
+
+function setTheme(th){
+  THEME = th;
+  document.documentElement.setAttribute('data-theme', th);
+  document.getElementById('themeBtn').textContent = th === 'dark' ? '🌙' : '☀️';
+  try { localStorage.setItem('eb_theme', th); } catch(e){}
+}
+
+function toggleTheme(){ setTheme(THEME === 'dark' ? 'light' : 'dark'); }
+
+function setLang(lang){
   LANG = lang;
-  try { localStorage.setItem('easybuy_lang', lang); } catch(e) {}
-  document.getElementById('langScreen').style.display = 'none';
-  document.getElementById('site').style.display = 'block';
-  document.getElementById('langToggleText').textContent = t('switchLang');
+  document.getElementById('langBtn').textContent = LANG === 'en' ? 'HA' : 'EN';
+  try { localStorage.setItem('eb_lang', lang); } catch(e){}
   applyTranslations();
-  renderCards();
+  renderPhones();
+  renderTestimonials();
+  renderFaqs();
 }
 
-function showLangScreen() {
-  document.getElementById('langScreen').style.display = 'flex';
-  document.getElementById('site').style.display = 'none';
-}
+function toggleLang(){ setLang(LANG === 'en' ? 'ha' : 'en'); }
 
-function applyTranslations() {
-  document.getElementById('siteSub').textContent = t('tagline');
-  document.getElementById('infoBanner').innerHTML = t('info');
-  document.getElementById('modalTitle').textContent = t('modalTitle');
-  document.getElementById('modalSub').textContent = t('modalSub');
-  document.getElementById('waBtn').textContent = t('send');
+function applyTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t(key)) el.textContent = t(key);
+  });
+  document.getElementById('heroBadge').textContent = t('heroBadge');
+  document.getElementById('heroTitle').innerHTML = t('heroTitle');
+  document.getElementById('heroText').textContent = t('heroText');
+  document.getElementById('heroBtn1').textContent = t('heroBtn1');
+  document.getElementById('heroBtn2').textContent = t('heroBtn2');
+  document.getElementById('howTag').textContent = t('howTag');
+  document.getElementById('howTitle').textContent = t('howTitle');
+  document.getElementById('howSub').textContent = t('howSub');
+  document.getElementById('how1t').textContent = t('how1t'); document.getElementById('how1p').textContent = t('how1p');
+  document.getElementById('how2t').textContent = t('how2t'); document.getElementById('how2p').textContent = t('how2p');
+  document.getElementById('how3t').textContent = t('how3t'); document.getElementById('how3p').textContent = t('how3p');
+  document.getElementById('phonesTag').textContent = t('phonesTag');
+  document.getElementById('phonesTitle').textContent = t('phonesTitle');
+  document.getElementById('phonesSub').textContent = t('phonesSub');
+  document.getElementById('testTag').textContent = t('testTag');
+  document.getElementById('testTitle').textContent = t('testTitle');
+  document.getElementById('testSub').textContent = t('testSub');
+  document.getElementById('faqTag').textContent = t('faqTag');
+  document.getElementById('faqTitle').textContent = t('faqTitle');
+  document.getElementById('faqSub').textContent = t('faqSub');
+  document.getElementById('contTag').textContent = t('contTag');
+  document.getElementById('contTitle').textContent = t('contTitle');
+  document.getElementById('contSub').textContent = t('contSub');
+  document.getElementById('mTitle').textContent = t('mTitle');
+  document.getElementById('mSub').textContent = t('mSub');
+  document.getElementById('waBtn').textContent = t('waBtn');
   document.getElementById('cancelBtn').textContent = t('cancel');
   document.getElementById('cName').placeholder = t('name');
   document.getElementById('cPhone').placeholder = t('phone');
   document.getElementById('cAddress').placeholder = t('address');
   document.getElementById('cNotes').placeholder = t('notes');
+  document.getElementById('cfTitle').textContent = t('cfTitle');
+  document.getElementById('cfSub').textContent = t('cfSub');
+  document.getElementById('cfBtn').textContent = t('cfBtn');
+  document.getElementById('footAbout').textContent = t('footAbout');
+  document.getElementById('mRule').innerHTML = '<span class="title">' + RULE[LANG].title + '</span>' + RULE[LANG].body;
 }
 
-function cardImageHTML(p) {
-  if (p.image && p.image.trim() !== "") {
-    return '<img src="' + p.image + '" alt="' + p.name + '" onerror="this.parentElement.innerHTML=fallbackHTML(' + p.id + ');">';
+function imageHTML(p){
+  if (p.image && p.image.trim() !== '') {
+    return '<img src="' + p.image + '" alt="' + p.name + '" loading="lazy" onerror="this.parentElement.innerHTML=fallbackHTML(' + p.id + ');">';
   }
   return fallbackHTML(p.id);
 }
 
-function fallbackHTML(id) {
+function fallbackHTML(id){
   const p = phones.find(x => x.id === id);
-  return '<div class="card-fallback">' +
-    '<div class="badge">' + p.brand + '</div>' +
-    '<div class="shape">📱</div>' +
-    '<div class="name">' + p.name + '</div>' +
+  return '<div class="phone-auto-card">' +
+    '<div class="brand-badge">' + p.brand + '</div>' +
+    '<div class="phone-shape">📱</div>' +
+    '<div class="phone-name">' + p.name + '</div>' +
   '</div>';
 }
 
-function planTabHTML(weeks, available, active) {
-  const info = planInfo(weeks);
+function badgeHTML(p){
+  if (!p.badge) return '';
+  const labels = { popular:t('mostPopular'), value:t('bestValue'), few:t('onlyFew') };
+  const cls = { popular:'badge-popular', value:'badge-value', few:'badge-few' };
+  return '<div class="badge-flag ' + cls[p.badge] + '">' + labels[p.badge] + '</div>';
+}
+
+function planTabHTML(w, available, active){
+  const info = planInfo(w);
   const cls = (available ? '' : 'disabled') + ' ' + (active ? 'active' : '');
-  return '<div class="plan-tab ' + cls + '" ' +
-    (available ? 'onclick="selectPlan(' + weeks + ',this)"' : '') + '>' +
+  const click = available ? 'onclick="selectPlanCard(' + w + ',this)"' : '';
+  return '<div class="plan-tab ' + cls + '" ' + click + '>' +
     '<span class="mo">' + info.months + '</span>' +
     '<span class="wk">' + info.payments + '</span>' +
   '</div>';
 }
 
-function renderCards() {
-  const allPlans = [13, 17, 26, 39];
-  document.getElementById('grid').innerHTML = phones.map(p => {
-    const available = allPlans.filter(w => p['w' + w]);
-    const firstPlan = available[0] || 13;
-    const tabs = allPlans.map(w => planTabHTML(w, !!p['w'+w], w === firstPlan)).join('');
-
-    return '<div class="card">' +
-      '<div class="card-img">' + cardImageHTML(p) + '</div>' +
-      '<h3>' + p.name + '</h3>' +
-      '<p>' + p.model + '</p>' +
-      '<div class="dp"><div class="lbl">' + t('downPayment') + '</div><div class="amt">' + formatNaira(p.dp) + '</div></div>' +
-      '<div class="plan-lbl">' + t('choosePlan') + '</div>' +
-      '<div class="plan-tabs" id="tabs-' + p.id + '">' + tabs + '</div>' +
-      '<div class="selected-box"><div class="lbl">' + t('youSelected') + '</div><div class="val" id="sel-' + p.id + '"></div><div class="sub" id="selsub-' + p.id + '"></div></div>' +
-      '<div id="brk-' + p.id + '"></div>' +
-      '<button class="order-btn" onclick="openOrder(' + p.id + ')">' + t('orderBtn') + '</button>' +
-    '</div>';
-  }).join('');
-
-  phones.forEach(p => {
-    const available = [13, 17, 26, 39].filter(w => p['w' + w]);
-    if (available.length) showBreakdown(p.id, available[0]);
-  });
+function renderPhones(){
+  const grid = document.getElementById('phonesGrid');
+  // skeleton
+  grid.innerHTML = Array(6).fill('<div class="skeleton"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line short"></div></div>').join('');
+  setTimeout(() => {
+    const allPlans = [13,17,26,39];
+    grid.innerHTML = phones.map(p => {
+      const available = allPlans.filter(w => p['w' + w]);
+      const firstPlan = available[0] || 13;
+      const tabs = allPlans.map(w => planTabHTML(w, !!p['w'+w], w === firstPlan)).join('');
+      return '<div class="phone-card" data-id="' + p.id + '">' +
+        badgeHTML(p) +
+        '<div class="phone-img-box">' + imageHTML(p) + '</div>' +
+        '<div class="phone-header"><h3>' + p.name + '</h3><p>' + p.model + '</p></div>' +
+        '<div class="dp-box"><div class="label">' + t('downPayment') + '</div><div class="amount">' + fmt(p.dp) + '</div></div>' +
+        '<div class="plan-label">' + t('choosePlan') + '</div>' +
+        '<div class="plan-tabs" id="tabs-' + p.id + '">' + tabs + '</div>' +
+        '<div class="sel-box"><div class="lbl">' + t('youSelected') + '</div><div class="val" id="sel-' + p.id + '"></div><div class="sub" id="selsub-' + p.id + '"></div></div>' +
+        '<div class="breakdown" id="brk-' + p.id + '"></div>' +
+        '<div class="rule-box"><span class="title">' + RULE[LANG].title + '</span>' + RULE[LANG].body + '</div>' +
+        '<button class="order-btn" onclick="openOrder(' + p.id + ')">' + t('orderBtn') + '</button>' +
+        '<div class="share-row">' +
+          '<button class="share-btn" onclick="shareProduct(' + p.id + ',\'wa\')">💬 WhatsApp</button>' +
+          '<button class="share-btn" onclick="shareProduct(' + p.id + ',\'tg\')">✈️ Telegram</button>' +
+          '<button class="share-btn" onclick="shareProduct(' + p.id + ',\'copy\')">🔗 Copy</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    phones.forEach(p => {
+      const avail = [13,17,26,39].filter(w => p['w'+w]);
+      if (avail.length) showBreakdown(p.id, avail[0]);
+    });
+  }, 350);
 }
 
-function selectPlan(weeks, el) {
-  const card = el.closest('.card');
+function selectPlanCard(weeks, el){
+  const card = el.closest('.phone-card');
   card.querySelectorAll('.plan-tab').forEach(x => x.classList.remove('active'));
   el.classList.add('active');
-  const phoneId = parseInt(card.querySelector('.plan-tabs').id.replace('tabs-',''));
+  const phoneId = parseInt(card.dataset.id);
   showBreakdown(phoneId, weeks);
 }
 
-function showBreakdown(phoneId, weeks) {
+function showBreakdown(phoneId, weeks){
   const p = phones.find(x => x.id === phoneId);
   const weekly = p['w' + weeks];
   if (!weekly) return;
@@ -290,114 +634,163 @@ function showBreakdown(phoneId, weeks) {
   const total = weekly * weeks;
   const grand = p.dp + total;
   document.getElementById('brk-' + phoneId).innerHTML =
-    '<div class="row"><span class="k">' + t('weekly') + ' × ' + info.payments + '</span><span class="v">' + formatNaira(weekly) + '</span></div>' +
-    '<div class="row"><span class="k">' + t('totalOutstanding') + '</span><span class="v">' + formatNaira(total) + '</span></div>' +
-    '<div class="row total"><span class="k">' + t('totalCost') + '</span><span class="v">' + formatNaira(grand) + '</span></div>';
+    '<div class="row"><span>' + t('weekly') + ' × ' + info.payments + '</span><span class="v">' + fmt(weekly) + '</span></div>' +
+    '<div class="row"><span>' + t('totalOutstanding') + '</span><span class="v">' + fmt(total) + '</span></div>' +
+    '<div class="row total"><span>' + t('totalCost') + '</span><span class="v">' + fmt(grand) + '</span></div>';
 }
 
-let currentOrder = null;
+function renderTestimonials(){
+  document.getElementById('testGrid').innerHTML = testimonials[LANG].map(x =>
+    '<div class="test-card">' +
+      '<div class="stars">★★★★★</div>' +
+      '<p>"' + x.t + '"</p>' +
+      '<div class="test-author"><div class="test-avatar">' + x.n.charAt(0) + '</div><div class="info"><h5>' + x.n + '</h5><span>' + x.l + '</span></div></div>' +
+    '</div>'
+  ).join('');
+}
 
-function openOrder(phoneId) {
+function renderFaqs(){
+  document.getElementById('faqList').innerHTML = faqs[LANG].map((f, i) =>
+    '<div class="faq-item" id="faq-' + i + '"><div class="faq-q" onclick="toggleFaq(' + i + ')">' + f.q + '<span class="arrow">▾</span></div><div class="faq-a"><div>' + f.a + '</div></div></div>'
+  ).join('');
+}
+
+function toggleFaq(i){
+  const el = document.getElementById('faq-' + i);
+  el.classList.toggle('open');
+}
+
+function shareProduct(id, mode){
+  const p = phones.find(x => x.id === id);
+  const url = window.location.origin + window.location.pathname + '#phone-' + id;
+  const text = p.name + ' — ' + p.model + ' | Easy Buy';
+  if (mode === 'wa') window.open('https://wa.me/?text=' + encodeURIComponent(text + '\n' + url), '_blank');
+  else if (mode === 'tg') window.open('https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text), '_blank');
+  else { navigator.clipboard && navigator.clipboard.writeText(text + '\n' + url); alert('Link copied!'); }
+}
+
+function openTelegram(){ window.open("https://t.me/Abba3122", "_blank"); }
+function openWhatsApp(){
+  window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_GREETING), '_blank');
+}
+
+function openOrder(phoneId){
   const p = phones.find(x => x.id === phoneId);
   const activeTab = document.querySelector('#tabs-' + phoneId + ' .plan-tab.active');
   const weeks = activeTab ? planWeeksFromTab(activeTab) : 13;
-  currentOrder = { phone: p, weeks: weeks };
+  currentOrder = { phone:p, weeks:weeks };
   refreshModal();
   document.getElementById('overlay').classList.add('show');
 }
 
-function planWeeksFromTab(tabEl) {
-  const mo = tabEl.querySelector('.mo').textContent;
-  for (const w in PLAN_INFO) {
-    if (PLAN_INFO[w][LANG].months === mo) return parseInt(w);
-  }
+function planWeeksFromTab(el){
+  const mo = el.querySelector('.mo').textContent;
+  for (const w in PLAN_INFO) if (PLAN_INFO[w][LANG].months === mo) return parseInt(w);
   return 13;
 }
 
-function refreshModal() {
+function refreshModal(){
   const p = currentOrder.phone;
   const weeks = currentOrder.weeks;
   const info = planInfo(weeks);
   const weekly = p['w' + weeks];
   const total = weekly * weeks;
   const grand = p.dp + total;
-
   document.getElementById('planBadge').innerHTML =
-    '<div class="lbl">' + t('youSelected') + '</div>' +
-    '<div class="val">' + info.months + '</div>' +
-    '<div class="sub">' + info.payments + '</div>';
-
-  const allPlans = [13, 17, 26, 39];
-  const tabs = allPlans.map(w => planTabHTML(w, !!p['w'+w], w === weeks).replace(/onclick="selectPlan\((\d+),this\)"/, 'onclick="switchPlan($1)"')).join('');
-
+    '<div class="lbl">' + t('youSelected') + '</div><div class="val">' + info.months + '</div><div class="sub">' + info.payments + '</div>';
+  const allPlans = [13,17,26,39];
+  const tabs = allPlans.map(w => {
+    const available = !!p['w'+w];
+    const cls = (available ? '' : 'disabled') + ' ' + (w === weeks ? 'active' : '');
+    const click = available ? 'onclick="switchPlan(' + w + ')"' : '';
+    const pi = planInfo(w);
+    return '<div class="plan-tab ' + cls + '" ' + click + '><span class="mo">' + pi.months + '</span><span class="wk">' + pi.payments + '</span></div>';
+  }).join('');
   document.getElementById('summary').innerHTML =
-    '<div style="margin-bottom:14px;"><strong style="color:#00d4ff;">' + p.name + '</strong> — ' + p.model + '</div>' +
-    '<div class="plan-lbl">' + t('changePlan') + '</div>' +
+    '<div style="margin-bottom:14px;font-weight:800;color:var(--accent);">' + p.name + ' — ' + p.model + '</div>' +
+    '<div class="plan-label">' + t('changePlan') + '</div>' +
     '<div class="plan-tabs" style="margin-bottom:14px;">' + tabs + '</div>' +
-    '<div class="row"><span class="k">' + t('downPayment') + '</span><span class="v">' + formatNaira(p.dp) + '</span></div>' +
-    '<div class="row"><span class="k">' + t('weekly') + ' × ' + info.payments + '</span><span class="v">' + formatNaira(weekly) + '</span></div>' +
-    '<div class="row"><span class="k">' + t('totalOutstanding') + '</span><span class="v">' + formatNaira(total) + '</span></div>' +
-    '<div class="row total"><span class="k">' + t('totalCost') + '</span><span class="v">' + formatNaira(grand) + '</span></div>' +
-    '<div style="height:14px;"></div>';
+    '<div class="breakdown">' +
+      '<div class="row"><span>' + t('downPayment') + '</span><span class="v">' + fmt(p.dp) + '</span></div>' +
+      '<div class="row"><span>' + t('weekly') + ' × ' + info.payments + '</span><span class="v">' + fmt(weekly) + '</span></div>' +
+      '<div class="row"><span>' + t('totalOutstanding') + '</span><span class="v">' + fmt(total) + '</span></div>' +
+      '<div class="row total"><span>' + t('totalCost') + '</span><span class="v">' + fmt(grand) + '</span></div>' +
+    '</div>';
 }
 
-function switchPlan(weeks) { currentOrder.weeks = weeks; refreshModal(); }
-function closeModal() { document.getElementById('overlay').classList.remove('show'); }
+function switchPlan(weeks){
+  currentOrder.weeks = weeks;
+  refreshModal();
+}
 
-function sendWhatsApp() {
+function closeModal(){ document.getElementById('overlay').classList.remove('show'); }
+
+function sendWhatsApp(){
   const p = currentOrder.phone;
   const weeks = currentOrder.weeks;
   const info = planInfo(weeks);
   const weekly = p['w' + weeks];
   const total = weekly * weeks;
   const grand = p.dp + total;
-
   const name = document.getElementById('cName').value.trim();
   const phone = document.getElementById('cPhone').value.trim();
   const address = document.getElementById('cAddress').value.trim();
   const notes = document.getElementById('cNotes').value.trim();
-
-  if (!name || !phone || !address) {
-    alert(t('confirmMsg'));
-    return;
-  }
+  if (!name || !phone || !address) { alert(t('errFill')); return; }
 
   let msg = '';
   msg += '🛒 *NEW ORDER — Easy Buy*\n\n';
-  msg += '📱 *Phone:* ' + p.name + '\n';
-  msg += '💾 *Model:* ' + p.model + '\n\n';
+  msg += '📱 *Phone:* ' + p.name + '\n💾 *Model:* ' + p.model + '\n\n';
   msg += '📋 *Plan:* ' + info.months + ' (' + info.payments + ')\n';
-  msg += '💰 *Down Payment:* ' + formatNaira(p.dp) + '\n';
-  msg += '📅 *Weekly Payment:* ' + formatNaira(weekly) + '\n';
-  msg += '📊 *Total Outstanding:* ' + formatNaira(total) + '\n';
-  msg += '💵 *Total Cost:* ' + formatNaira(grand) + '\n\n';
-  msg += '👤 *Name:* ' + name + '\n';
-  msg += '📞 *Phone:* ' + phone + '\n';
-  msg += '📍 *Address:* ' + address + '\n';
+  msg += '💰 *Down Payment:* ' + fmt(p.dp) + '\n';
+  msg += '📅 *Weekly Payment:* ' + fmt(weekly) + '\n';
+  msg += '📊 *Total Outstanding:* ' + fmt(total) + '\n';
+  msg += '💵 *Total Cost:* ' + fmt(grand) + '\n\n';
+  msg += '👤 *Name:* ' + name + '\n📞 *Phone:* ' + phone + '\n📍 *Address:* ' + address + '\n';
   if (notes) msg += '📝 *Notes:* ' + notes + '\n';
 
+  // Save order in background (works on Render; harmless on static host)
   try {
     fetch('/api/order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        customer_name: name, customer_phone: phone, customer_address: address, notes: notes,
-        phone_model: p.name + ' — ' + p.model,
+        customer_name:name, customer_phone:phone, customer_address:address, notes:notes,
+        phone_model:p.name + ' — ' + p.model,
         plan_label: info.months + ' (' + info.payments + ')',
-        down_payment: p.dp, weeks: weeks, weekly_payment: weekly,
-        total_outstanding: total, total_cost: grand
+        down_payment:p.dp, weeks:weeks, weekly_payment:weekly,
+        total_outstanding:total, total_cost:grand
       })
     }).catch(() => {});
-  } catch (e) {}
+  } catch(e){}
 
-  const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
-  window.open(url, '_blank');
+  window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+
+  // Show confirmation
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('cfSummary').innerHTML =
+    '<div style="font-weight:800;color:var(--accent);margin-bottom:8px;">' + p.name + ' — ' + p.model + '</div>' +
+    '<div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="color:var(--txt-soft);">Plan</span><span style="font-weight:700;">' + info.months + ' (' + info.payments + ')</span></div>' +
+    '<div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="color:var(--txt-soft);">Down Payment</span><span style="font-weight:700;">' + fmt(p.dp) + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="color:var(--txt-soft);">Weekly</span><span style="font-weight:700;">' + fmt(weekly) + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between;padding:8px 0 0;border-top:1px solid var(--card-border);margin-top:6px;"><span style="color:var(--txt-soft);">Total</span><span style="font-weight:800;color:var(--accent);">' + fmt(grand) + '</span></div>';
+  document.getElementById('confirmOverlay').classList.add('show');
+  document.getElementById('cName').value = '';
+  document.getElementById('cPhone').value = '';
+  document.getElementById('cAddress').value = '';
+  document.getElementById('cNotes').value = '';
 }
 
+function closeConfirm(){ document.getElementById('confirmOverlay').classList.remove('show'); }
+
+// Init
 try {
-  const saved = localStorage.getItem('easybuy_lang');
-  if (saved === 'en' || saved === 'ha') setLang(saved);
-} catch(e) {}
+  const savedLang = localStorage.getItem('eb_lang');
+  const savedTheme = localStorage.getItem('eb_theme');
+  if (savedTheme) setTheme(savedTheme); else setTheme('dark');
+  if (savedLang) setLang(savedLang); else { document.getElementById('langBtn').textContent = 'HA'; applyTranslations(); renderPhones(); renderTestimonials(); renderFaqs(); }
+} catch(e) {
+  applyTranslations(); renderPhones(); renderTestimonials(); renderFaqs();
+}
 </script>
 </body>
 </html>
